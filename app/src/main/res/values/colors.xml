@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="colorPrimary">#3f88c5</color>
-    <color name="colorPrimaryLight">#81b2d9</color>
-    <color name="colorPrimaryDark">#3476ad</color>
-    <color name="colorAccent">#21c0ab</color>
-    <color name="colorAccentLight">#51E1CE</color>
+    <color name="colorPrimary">#8E24AA</color>
+    <color name="colorPrimaryLight">#CE93D8</color>
+    <color name="colorPrimaryDark">#6A1B9A</color>
+    <color name="colorAccent">#FFAB40</color>
+    <color name="colorAccentLight">#FFD180</color>
 
 
-    <color name="colorPrimaryOverlay">#7fBCAAA4</color>
-    <color name="colorPrimaryLightOverlay">#7fEFEBE9</color>
-    <color name="colorPrimaryDarkOverlay">#7f8D6E63</color>
-    <color name="colorAccentOverlay">#7f69F0AE</color>
-    <color name="colorAccentLightOverlay">#7fB9F6CA</color>
+    <color name="colorPrimaryOverlay">#7F8E24AA</color>
+    <color name="colorPrimaryLightOverlay">#7FCE93D8</color>
+    <color name="colorPrimaryDarkOverlay">#7F6A1B9A</color>
+    <color name="colorAccentOverlay">#7FFFAB40</color>
+    <color name="colorAccentLightOverlay">#7FFFD180</color>
 
     <!-- Standard App Colors -->
     <color name="grayDark">#424242</color>

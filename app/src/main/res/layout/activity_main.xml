@@ -90,7 +90,6 @@
                                 android:id="@+id/openChildForm"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:background="@color/colorAccentLightOverlay"
                                 android:clickable="true"
                                 android:onClick="sectionPress"
                                 android:orientation="horizontal">

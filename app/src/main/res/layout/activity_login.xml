@@ -127,7 +127,7 @@
                                     android:paddingBottom="8dp"
                                     android:radius="2dp"
                                     android:singleLine="true"
-                                    android:textColor="@color/colorPrimary"
+                                    android:textColor="@color/grayDark"
                                     android:textSize="18sp" />
 
                                 <LinearLayout
@@ -157,7 +157,7 @@
                                         android:paddingBottom="8dp"
                                         android:radius="2dp"
                                         android:singleLine="true"
-                                        android:textColor="@color/colorPrimary"
+                                        android:textColor="@color/grayDark"
                                         android:textSize="18sp" />
 
                                     <ImageButton
