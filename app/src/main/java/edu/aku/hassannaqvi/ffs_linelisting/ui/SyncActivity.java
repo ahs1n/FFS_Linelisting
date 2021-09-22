@@ -50,7 +50,6 @@ import java.util.concurrent.TimeUnit;
 import edu.aku.hassannaqvi.ffs_linelisting.R;
 import edu.aku.hassannaqvi.ffs_linelisting.adapters.SyncListAdapter;
 import edu.aku.hassannaqvi.ffs_linelisting.contracts.TableContracts.FormTable;
-import edu.aku.hassannaqvi.ffs_linelisting.contracts.TableContracts.FormWRTable;
 import edu.aku.hassannaqvi.ffs_linelisting.contracts.TableContracts.UsersTable;
 import edu.aku.hassannaqvi.ffs_linelisting.contracts.TableContracts.VersionTable;
 import edu.aku.hassannaqvi.ffs_linelisting.core.MainApp;
@@ -142,7 +141,7 @@ public class SyncActivity extends AppCompatActivity {
                 uploadTables.clear();
                 MainApp.uploadData.clear();
 
-                // FormsCR
+                // Forms
                 uploadTables.add(new SyncModel(FormTable.TABLE_NAME));
                 try {
                     MainApp.uploadData.add(db.getUnsyncedForm());
@@ -151,14 +150,6 @@ public class SyncActivity extends AppCompatActivity {
                     Toast.makeText(this, "JSONException(FormCR): " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
 
-                // FormsWR
-                uploadTables.add(new SyncModel(FormWRTable.TABLE_NAME));
-                try {
-                    MainApp.uploadData.add(db.getUnsyncedFormWR());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    Toast.makeText(this, "JSONException(FormWR): " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
                 MainApp.downloadData = new String[uploadData.size()];
 
                 setAdapter(uploadTables);
