@@ -1,6 +1,6 @@
 package edu.aku.hassannaqvi.ffs_linelisting.ui.sections;
 
-import static edu.aku.hassannaqvi.ffs_linelisting.core.MainApp.cr;
+import static edu.aku.hassannaqvi.ffs_linelisting.core.MainApp.sa;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -62,15 +62,15 @@ public class SectionAActivity extends AppCompatActivity {
         long rowId = 0;
 
         try {
-            rowId = db.addCR(cr);
+            rowId = db.addCR(sa);
 
             if (rowId > 0) {
                 long updCount = 0;
 
-                cr.setId(String.valueOf(rowId));
-                cr.setUid(cr.getDeviceId() + cr.getId());
+                sa.setId(String.valueOf(rowId));
+                sa.setUid(sa.getDeviceId() + sa.getId());
 
-                updCount = db.updateCrColumn(TableContracts.FormTable.COLUMN_UID, cr.getUid());
+                updCount = db.updateCrColumn(TableContracts.FormTable.COLUMN_UID, sa.getUid());
 
                 if (updCount > 0) {
                     return true;
@@ -100,20 +100,83 @@ public class SectionAActivity extends AppCompatActivity {
 
 
     private void saveDraft() {
-        cr = new Form();
-        cr.setSysDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH).format(new Date().getTime()));
-        cr.setUserName(MainApp.user.getUserName());
-        cr.setDeviceId(MainApp.appInfo.getDeviceID());
-        cr.setDeviceTag(MainApp.appInfo.getTagName());
-        cr.setAppver(MainApp.appInfo.getAppVersion());
-        cr.setStartTime(st);
-        cr.setEndTime(new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH).format(new Date().getTime()));
+        sa = new Form();
+        sa.setSysDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH).format(new Date().getTime()));
+        sa.setUserName(MainApp.user.getUserName());
+        sa.setDeviceId(MainApp.appInfo.getDeviceID());
+        sa.setDeviceTag(MainApp.appInfo.getTagName());
+        sa.setAppver(MainApp.appInfo.getAppVersion());
+        sa.setStartTime(st);
+        sa.setEndTime(new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH).format(new Date().getTime()));
+
+
+        sa.setHh01(bi.hh01.getText().toString());
+
+        sa.setHh02(bi.hh02.getText().toString());
+
+        sa.setHh03(bi.hh03.getText().toString());
+
+        sa.setHh04(bi.hh04.getText().toString());
+
+        sa.setHh05(bi.hh05.getText().toString());
+
+        sa.setHh06(bi.hh06.getText().toString());
+
+        sa.setHh07(bi.hh0701.isChecked() ? "1"
+                : bi.hh0702.isChecked() ? "2"
+                : bi.hh0703.isChecked() ? "3"
+                : bi.hh0704.isChecked() ? "4"
+                : bi.hh0705.isChecked() ? "5"
+                : bi.hh0706.isChecked() ? "6"
+                : bi.hh0707.isChecked() ? "7"
+                : bi.hh0708.isChecked() ? "8"
+                : bi.hh0709.isChecked() ? "9"
+                : bi.hh0710.isChecked() ? "10"
+                : bi.hh0711.isChecked() ? "11"
+                : bi.hh0712.isChecked() ? "12"
+                : bi.hh0713.isChecked() ? "13"
+                : bi.hh0714.isChecked() ? "14"
+                : bi.hh0715.isChecked() ? "15"
+                : bi.hh0716.isChecked() ? "16"
+                : bi.hh0717.isChecked() ? "96"
+                : bi.hh0718.isChecked() ? "18"
+                : bi.hh0719.isChecked() ? "19"
+                : "-1");
+
+        sa.setHh0717x(bi.hh0717x.getText().toString());
+        sa.setHh08(bi.hh08.getText().toString());
+
+        sa.setHh09(bi.hh0801.isChecked() ? "1"
+                : bi.hh0802.isChecked() ? "2"
+                : "-1");
+
+        sa.setHh10(bi.hh10.getText().toString());
+
+        sa.setHh11(bi.hh11.getText().toString());
+
+        sa.setHh12(bi.hh12.getText().toString());
+
+        sa.setHh13(bi.hh13.getText().toString());
+
+        sa.setHh14(bi.hh1401.isChecked() ? "1"
+                : bi.hh1402.isChecked() ? "2"
+                : "-1");
+
+        sa.setHh15(bi.hh15.getText().toString());
+
+        sa.setHh16(bi.hh16.getText().toString());
+
+        sa.setHh17(bi.hh17.getText().toString());
+
+        sa.setHh18(bi.hh18.getText().toString());
+
+        sa.setHh19(bi.hh19.getText().toString());
 
         try {
-            cr.setsA(cr.sAtoString());
+            sa.setsA(sa.sAtoString());
         } catch (JSONException e) {
             e.printStackTrace();
-            Toast.makeText(this, "JSONException(CR): " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "JSONException(SA): " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
 
     }
