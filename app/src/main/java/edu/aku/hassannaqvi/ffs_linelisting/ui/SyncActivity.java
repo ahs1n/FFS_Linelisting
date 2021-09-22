@@ -145,7 +145,7 @@ public class SyncActivity extends AppCompatActivity {
                 // FormsCR
                 uploadTables.add(new SyncModel(FormTable.TABLE_NAME));
                 try {
-                    MainApp.uploadData.add(db.getUnsyncedFormCR());
+                    MainApp.uploadData.add(db.getUnsyncedForm());
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Toast.makeText(this, "JSONException(FormCR): " + e.getMessage(), Toast.LENGTH_SHORT).show();
