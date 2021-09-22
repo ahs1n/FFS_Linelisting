@@ -1,2 +1,2 @@
-rootProject.name = "FFS_Linelisting"
+rootProject.name = "ffs_linelisting"
 include ':app'

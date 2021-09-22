@@ -18,18 +18,17 @@ import java.util.List;
 
 import edu.aku.hassannaqvi.ffs_linelisting.BuildConfig;
 import edu.aku.hassannaqvi.ffs_linelisting.R;
-import edu.aku.hassannaqvi.ffs_linelisting.models.FormCR;
-import edu.aku.hassannaqvi.ffs_linelisting.models.FormWR;
+import edu.aku.hassannaqvi.ffs_linelisting.models.Form;
 import edu.aku.hassannaqvi.ffs_linelisting.models.Users;
 
 
 public class MainApp extends Application {
 
-    public static final String PROJECT_NAME = "epi_register";
+    public static final String PROJECT_NAME = "ffs_linelisting";
     public static final String DIST_ID = null;
     public static final String SYNC_LOGIN = "sync_login";
-    public static final String _IP = "https://vcoe1.aku.edu";// .LIVE server
-    //public static final String _IP = "http://f38158/prosystem";// .TEST server
+    //    public static final String _IP = "https://vcoe1.aku.edu";// .LIVE server
+    public static final String _IP = "http://f38158/prosystem";// .TEST server
     //public static final String _IP = "http://43.245.131.159:8080";// .TEST server
     public static final String _HOST_URL = MainApp._IP + "/" + PROJECT_NAME + "/api/";// .TEST server;
     public static final String _SERVER_URL = "sync.php";
@@ -44,7 +43,7 @@ public class MainApp extends Application {
 
     public static File sdDir;
     public static String[] downloadData;
-    public static FormCR cr;
+    public static Form cr;
     public static FormWR wr;
 
     public static String DeviceURL = "devices.php";

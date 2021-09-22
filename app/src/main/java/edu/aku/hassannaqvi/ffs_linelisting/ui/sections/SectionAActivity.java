@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import com.validatorcrawler.aliazaz.Clear;
 import com.validatorcrawler.aliazaz.Validator;
 
 import org.json.JSONException;
@@ -24,7 +25,7 @@ import edu.aku.hassannaqvi.ffs_linelisting.contracts.TableContracts;
 import edu.aku.hassannaqvi.ffs_linelisting.core.MainApp;
 import edu.aku.hassannaqvi.ffs_linelisting.database.DatabaseHelper;
 import edu.aku.hassannaqvi.ffs_linelisting.databinding.ActivitySectionABinding;
-import edu.aku.hassannaqvi.ffs_linelisting.models.FormCR;
+import edu.aku.hassannaqvi.ffs_linelisting.models.Form;
 
 public class SectionAActivity extends AppCompatActivity {
     private static final String TAG = "SectionCRActivity";
@@ -46,6 +47,13 @@ public class SectionAActivity extends AppCompatActivity {
 
 
     private void setupSkips() {
+
+        bi.hh07.setOnCheckedChangeListener((radioGroup, i) -> Clear.clearAllFields(bi.fldGrpCVhh08));
+
+        bi.hh09.setOnCheckedChangeListener((radioGroup, i) -> Clear.clearAllFields(bi.fldGrpCVhh10));
+
+        bi.hh14.setOnCheckedChangeListener((radioGroup, i) -> Clear.clearAllFields(bi.fldGrpa14a));
+
     }
 
 
@@ -62,7 +70,7 @@ public class SectionAActivity extends AppCompatActivity {
                 cr.setId(String.valueOf(rowId));
                 cr.setUid(cr.getDeviceId() + cr.getId());
 
-                updCount = db.updateCrColumn(TableContracts.FormCRTable.COLUMN_UID, cr.getUid());
+                updCount = db.updateCrColumn(TableContracts.FormTable.COLUMN_UID, cr.getUid());
 
                 if (updCount > 0) {
                     return true;
@@ -92,7 +100,7 @@ public class SectionAActivity extends AppCompatActivity {
 
 
     private void saveDraft() {
-        cr = new FormCR();
+        cr = new Form();
         cr.setSysDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH).format(new Date().getTime()));
         cr.setUserName(MainApp.user.getUserName());
         cr.setDeviceId(MainApp.appInfo.getDeviceID());
@@ -102,7 +110,7 @@ public class SectionAActivity extends AppCompatActivity {
         cr.setEndTime(new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH).format(new Date().getTime()));
 
         try {
-            cr.setcR(cr.cRtoString());
+            cr.setsA(cr.sAtoString());
         } catch (JSONException e) {
             e.printStackTrace();
             Toast.makeText(this, "JSONException(CR): " + e.getMessage(), Toast.LENGTH_SHORT).show();

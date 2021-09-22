@@ -10,7 +10,7 @@
 
         <variable
             name="form"
-            type="edu.aku.hassannaqvi.ffs_linelisting.models.FormCR" />
+            type="edu.aku.hassannaqvi.ffs_linelisting.models.Form" />
     </data>
 
 

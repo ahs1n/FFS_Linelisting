@@ -51,22 +51,6 @@
                         android:title="Report by LHW" />
                 </menu>
             </item>
-
-            <item
-                android:id="@+id/action_sections"
-                android:title="Sections">
-
-                <menu>
-                    <group android:id="@+id/secH">
-                        <item
-                            android:id="@+id/seccr"
-                            android:title="@string/linelistingform_mainheading" />
-                        <item
-                            android:id="@+id/secwr"
-                            android:title="@string/wr_mainheading" />
-                    </group>
-                </menu>
-            </item>
         </menu>
     </item>
 </menu>

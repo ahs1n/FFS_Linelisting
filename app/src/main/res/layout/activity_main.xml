@@ -110,7 +110,7 @@
                                         android:drawablePadding="12dp"
                                         android:gravity="center_vertical"
                                         android:minWidth="460dp"
-                                        android:text="@string/open_child_form"
+                                        android:text="@string/open_listing_form"
                                         android:textColor="@color/colorPrimary"
                                         android:textSize="16dp" />
 

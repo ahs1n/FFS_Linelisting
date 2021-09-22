@@ -49,7 +49,7 @@ import java.util.concurrent.TimeUnit;
 
 import edu.aku.hassannaqvi.ffs_linelisting.R;
 import edu.aku.hassannaqvi.ffs_linelisting.adapters.SyncListAdapter;
-import edu.aku.hassannaqvi.ffs_linelisting.contracts.TableContracts.FormCRTable;
+import edu.aku.hassannaqvi.ffs_linelisting.contracts.TableContracts.FormTable;
 import edu.aku.hassannaqvi.ffs_linelisting.contracts.TableContracts.FormWRTable;
 import edu.aku.hassannaqvi.ffs_linelisting.contracts.TableContracts.UsersTable;
 import edu.aku.hassannaqvi.ffs_linelisting.contracts.TableContracts.VersionTable;
@@ -143,7 +143,7 @@ public class SyncActivity extends AppCompatActivity {
                 MainApp.uploadData.clear();
 
                 // FormsCR
-                uploadTables.add(new SyncModel(FormCRTable.TABLE_NAME));
+                uploadTables.add(new SyncModel(FormTable.TABLE_NAME));
                 try {
                     MainApp.uploadData.add(db.getUnsyncedFormCR());
                 } catch (JSONException e) {

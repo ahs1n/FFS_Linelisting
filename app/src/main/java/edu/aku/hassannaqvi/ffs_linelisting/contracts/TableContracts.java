@@ -4,34 +4,15 @@ import android.provider.BaseColumns;
 
 public class TableContracts {
 
-    public static abstract class FormCRTable implements BaseColumns {
-        public static final String TABLE_NAME = "FormCR";
+    public static abstract class FormTable implements BaseColumns {
+        public static final String TABLE_NAME = "Form";
         public static final String COLUMN_NAME_NULLABLE = "NULLHACK";
         public static final String COLUMN_PROJECT_NAME = "projectName";
         public static final String COLUMN_ID = "_id";
         public static final String COLUMN_UID = "_uid";
         public static final String COLUMN_USERNAME = "username";
         public static final String COLUMN_SYSDATE = "sysdate";
-        public static final String COLUMN_CR = "cR";
-        public static final String COLUMN_DEVICEID = "deviceid";
-        public static final String COLUMN_DEVICETAGID = "devicetagid";
-        public static final String COLUMN_SYNCED = "synced";
-        public static final String COLUMN_SYNCED_DATE = "synced_date";
-        public static final String COLUMN_APPVERSION = "appversion";
-        public static final String COLUMN_ISTATUS = "istatus";
-        public static final String COLUMN_END_TIME = "end_time";
-        public static final String COLUMN_START_TIME = "start_time";
-    }
-
-    public static abstract class FormWRTable implements BaseColumns {
-        public static final String TABLE_NAME = "FormWR";
-        public static final String COLUMN_NAME_NULLABLE = "NULLHACK";
-        public static final String COLUMN_PROJECT_NAME = "projectName";
-        public static final String COLUMN_ID = "_id";
-        public static final String COLUMN_UID = "_uid";
-        public static final String COLUMN_USERNAME = "username";
-        public static final String COLUMN_SYSDATE = "sysdate";
-        public static final String COLUMN_WR = "wR";
+        public static final String COLUMN_SA = "sA";
         public static final String COLUMN_DEVICEID = "deviceid";
         public static final String COLUMN_DEVICETAGID = "devicetagid";
         public static final String COLUMN_SYNCED = "synced";

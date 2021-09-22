@@ -80,7 +80,7 @@ public class EndingActivity extends AppCompatActivity {
 
 
     private boolean UpdateDB() {
-        int updcount = db.updateCrColumn(TableContracts.FormCRTable.COLUMN_ISTATUS, cr.getiStatus());
+        int updcount = db.updateCrColumn(TableContracts.FormTable.COLUMN_ISTATUS, cr.getiStatus());
         return updcount > 0;
     }
 

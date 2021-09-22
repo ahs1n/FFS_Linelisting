@@ -2,7 +2,7 @@ package edu.aku.hassannaqvi.ffs_linelisting.database;
 
 import static edu.aku.hassannaqvi.ffs_linelisting.database.CreateTable.DATABASE_NAME;
 import static edu.aku.hassannaqvi.ffs_linelisting.database.CreateTable.DATABASE_VERSION;
-import static edu.aku.hassannaqvi.ffs_linelisting.database.CreateTable.SQL_CREATE_FORMCR;
+import static edu.aku.hassannaqvi.ffs_linelisting.database.CreateTable.SQL_CREATE_FORM;
 import static edu.aku.hassannaqvi.ffs_linelisting.database.CreateTable.SQL_CREATE_FORMWR;
 import static edu.aku.hassannaqvi.ffs_linelisting.database.CreateTable.SQL_CREATE_USERS;
 import static edu.aku.hassannaqvi.ffs_linelisting.database.CreateTable.SQL_CREATE_VERSIONAPP;
@@ -23,13 +23,12 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Date;
 
-import edu.aku.hassannaqvi.ffs_linelisting.contracts.TableContracts.FormCRTable;
+import edu.aku.hassannaqvi.ffs_linelisting.contracts.TableContracts.FormTable;
 import edu.aku.hassannaqvi.ffs_linelisting.contracts.TableContracts.FormWRTable;
 import edu.aku.hassannaqvi.ffs_linelisting.contracts.TableContracts.UsersTable;
 import edu.aku.hassannaqvi.ffs_linelisting.contracts.TableContracts.VersionTable;
 import edu.aku.hassannaqvi.ffs_linelisting.core.MainApp;
-import edu.aku.hassannaqvi.ffs_linelisting.models.FormCR;
-import edu.aku.hassannaqvi.ffs_linelisting.models.FormWR;
+import edu.aku.hassannaqvi.ffs_linelisting.models.Form;
 import edu.aku.hassannaqvi.ffs_linelisting.models.Users;
 import edu.aku.hassannaqvi.ffs_linelisting.models.VersionApp;
 
@@ -52,7 +51,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_USERS);
-        db.execSQL(SQL_CREATE_FORMCR);
+        db.execSQL(SQL_CREATE_FORM);
         db.execSQL(SQL_CREATE_FORMWR);
         db.execSQL(SQL_CREATE_VERSIONAPP);
 
@@ -68,32 +67,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     //ADDITION in DB
-    public Long addCR(FormCR cr) throws JSONException {
+    public Long addCR(Form cr) throws JSONException {
 
         // Gets the data repository in write mode
         SQLiteDatabase db = this.getWritableDatabase();
 
 // Create a new map of values, where column names are the keys
         ContentValues values = new ContentValues();
-        values.put(FormCRTable.COLUMN_PROJECT_NAME, cr.getProjectName());
-        values.put(FormCRTable.COLUMN_UID, cr.getUid());
-        values.put(FormCRTable.COLUMN_USERNAME, cr.getUserName());
-        values.put(FormCRTable.COLUMN_SYSDATE, cr.getSysDate());
-        values.put(FormCRTable.COLUMN_ISTATUS, cr.getiStatus());
-        values.put(FormCRTable.COLUMN_DEVICETAGID, cr.getDeviceTag());
-        values.put(FormCRTable.COLUMN_DEVICEID, cr.getDeviceId());
-        values.put(FormCRTable.COLUMN_APPVERSION, cr.getAppver());
-        values.put(FormCRTable.COLUMN_START_TIME, cr.getStartTime());
-        values.put(FormCRTable.COLUMN_END_TIME, cr.getEndTime());
+        values.put(FormTable.COLUMN_PROJECT_NAME, cr.getProjectName());
+        values.put(FormTable.COLUMN_UID, cr.getUid());
+        values.put(FormTable.COLUMN_USERNAME, cr.getUserName());
+        values.put(FormTable.COLUMN_SYSDATE, cr.getSysDate());
+        values.put(FormTable.COLUMN_ISTATUS, cr.getiStatus());
+        values.put(FormTable.COLUMN_DEVICETAGID, cr.getDeviceTag());
+        values.put(FormTable.COLUMN_DEVICEID, cr.getDeviceId());
+        values.put(FormTable.COLUMN_APPVERSION, cr.getAppver());
+        values.put(FormTable.COLUMN_START_TIME, cr.getStartTime());
+        values.put(FormTable.COLUMN_END_TIME, cr.getEndTime());
 
         // Put all JSON as xxtoString()
-        values.put(FormCRTable.COLUMN_CR, cr.cRtoString());
+        values.put(FormTable.COLUMN_SA, cr.sAtoString());
 
         // Insert the new row, returning the primary key value of the new row
         long newRowId;
         newRowId = db.insert(
-                FormCRTable.TABLE_NAME,
-                FormCRTable.COLUMN_NAME_NULLABLE,
+                FormTable.TABLE_NAME,
+                FormTable.COLUMN_NAME_NULLABLE,
                 values);
         return newRowId;
     }
@@ -132,10 +131,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(column, value);
 
-        String selection = FormCRTable._ID + " =? ";
+        String selection = FormTable._ID + " =? ";
         String[] selectionArgs = {String.valueOf(MainApp.cr.getId())};
 
-        return db.update(FormCRTable.TABLE_NAME,
+        return db.update(FormTable.TABLE_NAME,
                 values,
                 selection,
                 selectionArgs);
@@ -161,13 +160,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         // New value for one column
         ContentValues values = new ContentValues();
-        values.put(FormCRTable.COLUMN_ISTATUS, MainApp.cr.getiStatus());
+        values.put(FormTable.COLUMN_ISTATUS, MainApp.cr.getiStatus());
 
         // Which row to update, based on the ID
-        String selection = FormCRTable.COLUMN_ID + " =? ";
+        String selection = FormTable.COLUMN_ID + " =? ";
         String[] selectionArgs = {String.valueOf(MainApp.cr.getId())};
 
-        return db.update(FormCRTable.TABLE_NAME,
+        return db.update(FormTable.TABLE_NAME,
                 values,
                 selection,
                 selectionArgs);
@@ -219,28 +218,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public ArrayList<FormCR> getFormsByDate(String sysdate) {
+    public ArrayList<Form> getFormsByDate(String sysdate) {
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = null;
         String[] columns = {
-                FormCRTable._ID,
-                FormCRTable.COLUMN_UID,
-                FormCRTable.COLUMN_SYSDATE,
-                FormCRTable.COLUMN_USERNAME,
-                FormCRTable.COLUMN_ISTATUS,
-                FormCRTable.COLUMN_SYNCED,
+                FormTable._ID,
+                FormTable.COLUMN_UID,
+                FormTable.COLUMN_SYSDATE,
+                FormTable.COLUMN_USERNAME,
+                FormTable.COLUMN_ISTATUS,
+                FormTable.COLUMN_SYNCED,
 
         };
-        String whereClause = FormCRTable.COLUMN_SYSDATE + " Like ? ";
+        String whereClause = FormTable.COLUMN_SYSDATE + " Like ? ";
         String[] whereArgs = new String[]{"%" + sysdate + " %"};
         String groupBy = null;
         String having = null;
-        String orderBy = FormCRTable.COLUMN_ID + " ASC";
-        ArrayList<FormCR> allForms = new ArrayList<>();
+        String orderBy = FormTable.COLUMN_ID + " ASC";
+        ArrayList<Form> allForms = new ArrayList<>();
         try {
             c = db.query(
-                    FormCRTable.TABLE_NAME,  // The table to query
+                    FormTable.TABLE_NAME,  // The table to query
                     columns,                   // The columns to return
                     whereClause,               // The columns for the WHERE clause
                     whereArgs,                 // The values for the WHERE clause
@@ -249,11 +248,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     orderBy                    // The sort order
             );
             while (c.moveToNext()) {
-                FormCR forms = new FormCR();
-                forms.setId(c.getString(c.getColumnIndex(FormCRTable.COLUMN_ID)));
-                forms.setUid(c.getString(c.getColumnIndex(FormCRTable.COLUMN_UID)));
-                forms.setSysDate(c.getString(c.getColumnIndex(FormCRTable.COLUMN_SYSDATE)));
-                forms.setUserName(c.getString(c.getColumnIndex(FormCRTable.COLUMN_USERNAME)));
+                Form forms = new Form();
+                forms.setId(c.getString(c.getColumnIndex(FormTable.COLUMN_ID)));
+                forms.setUid(c.getString(c.getColumnIndex(FormTable.COLUMN_UID)));
+                forms.setSysDate(c.getString(c.getColumnIndex(FormTable.COLUMN_SYSDATE)));
+                forms.setUserName(c.getString(c.getColumnIndex(FormTable.COLUMN_USERNAME)));
                 allForms.add(forms);
             }
         } finally {
@@ -269,26 +268,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     // istatus examples: (1) or (1,9) or (1,3,5)
-    public FormCR getFormByAssessNo(String uid, String istatus) throws JSONException {
+    public Form getFormByAssessNo(String uid, String istatus) throws JSONException {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = null;
         String[] columns = null;
 
         String whereClause;
-        whereClause = FormCRTable.COLUMN_UID + "=? AND " +
-                FormCRTable.COLUMN_ISTATUS + " in " + istatus;
+        whereClause = FormTable.COLUMN_UID + "=? AND " +
+                FormTable.COLUMN_ISTATUS + " in " + istatus;
 
         String[] whereArgs = {uid};
 
         String groupBy = null;
         String having = null;
 
-        String orderBy = FormCRTable.COLUMN_ID + " ASC";
+        String orderBy = FormTable.COLUMN_ID + " ASC";
 
-        FormCR allFC = null;
+        Form allFC = null;
         try {
             c = db.query(
-                    FormCRTable.TABLE_NAME,  // The table to query
+                    FormTable.TABLE_NAME,  // The table to query
                     columns,                   // The columns to return
                     whereClause,               // The columns for the WHERE clause
                     whereArgs,                 // The values for the WHERE clause
@@ -297,7 +296,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     orderBy                    // The sort order
             );
             while (c.moveToNext()) {
-                allFC = new FormCR().Hydrate(c);
+                allFC = new Form().Hydrate(c);
             }
         } finally {
             if (c != null) {
@@ -494,19 +493,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String[] columns = null;
 
         String whereClause;
-        whereClause = FormCRTable.COLUMN_SYNCED + " is null ";
+        whereClause = FormTable.COLUMN_SYNCED + " is null ";
 
         String[] whereArgs = null;
 
         String groupBy = null;
         String having = null;
 
-        String orderBy = FormCRTable.COLUMN_ID + " ASC";
+        String orderBy = FormTable.COLUMN_ID + " ASC";
 
         JSONArray allCR = new JSONArray();
         try {
             c = db.query(
-                    FormCRTable.TABLE_NAME,  // The table to query
+                    FormTable.TABLE_NAME,  // The table to query
                     columns,                   // The columns to return
                     whereClause,               // The columns for the WHERE clause
                     whereArgs,                 // The values for the WHERE clause
@@ -519,7 +518,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                  /*Form fc = new Form();
                  allFC.add(fc.Hydrate(c));*/
                 Log.d(TAG, "getUnsyncedFormCR: " + c.getCount());
-                FormCR cr = new FormCR();
+                Form cr = new Form();
                 allCR.put(cr.Hydrate(c).toJSONObject());
             }
         } finally {
@@ -588,15 +587,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 // New value for one column
         ContentValues values = new ContentValues();
-        values.put(FormCRTable.COLUMN_SYNCED, true);
-        values.put(FormCRTable.COLUMN_SYNCED_DATE, new Date().toString());
+        values.put(FormTable.COLUMN_SYNCED, true);
+        values.put(FormTable.COLUMN_SYNCED_DATE, new Date().toString());
 
 // Which row to update, based on the title
-        String where = FormCRTable.COLUMN_ID + " = ?";
+        String where = FormTable.COLUMN_ID + " = ?";
         String[] whereArgs = {id};
 
         int count = db.update(
-                FormCRTable.TABLE_NAME,
+                FormTable.TABLE_NAME,
                 values,
                 where,
                 whereArgs);
