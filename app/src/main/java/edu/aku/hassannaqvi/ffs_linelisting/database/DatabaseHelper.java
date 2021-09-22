@@ -132,7 +132,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(column, value);
 
         String selection = FormTable._ID + " =? ";
-        String[] selectionArgs = {String.valueOf(MainApp.cr.getId())};
+        String[] selectionArgs = {String.valueOf(MainApp.sa.getId())};
 
         return db.update(FormTable.TABLE_NAME,
                 values,
@@ -160,11 +160,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         // New value for one column
         ContentValues values = new ContentValues();
-        values.put(FormTable.COLUMN_ISTATUS, MainApp.cr.getiStatus());
+        values.put(FormTable.COLUMN_ISTATUS, MainApp.sa.getiStatus());
 
         // Which row to update, based on the ID
         String selection = FormTable.COLUMN_ID + " =? ";
-        String[] selectionArgs = {String.valueOf(MainApp.cr.getId())};
+        String[] selectionArgs = {String.valueOf(MainApp.sa.getId())};
 
         return db.update(FormTable.TABLE_NAME,
                 values,
