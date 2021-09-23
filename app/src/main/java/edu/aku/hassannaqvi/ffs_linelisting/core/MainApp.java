@@ -45,6 +45,7 @@ public class MainApp extends Application {
     public static String[] downloadData;
     public static Form sa;
     public static Form sb;
+    public static Form lc;
 
     public static String DeviceURL = "devices.php";
     public static AppInfo appInfo;

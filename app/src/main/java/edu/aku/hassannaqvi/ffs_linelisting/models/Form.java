@@ -61,6 +61,7 @@ public class Form extends BaseObservable {
     private String hh19 = StringUtils.EMPTY;
     private String sA = StringUtils.EMPTY;
     private String sB = StringUtils.EMPTY;
+    private String lC = StringUtils.EMPTY;
 
     @Bindable
     public String getHh01() {
@@ -400,6 +401,14 @@ public class Form extends BaseObservable {
         this.sB = sB;
     }
 
+    public String getlC() {
+        return lC;
+    }
+
+    public void setlC(String lC) {
+        this.lC = lC;
+    }
+
 
     public Form Hydrate(Cursor cursor) throws JSONException {
         this.id = cursor.getString(cursor.getColumnIndex(FormTable.COLUMN_ID));
@@ -416,6 +425,7 @@ public class Form extends BaseObservable {
         this.startTime = cursor.getString(cursor.getColumnIndex(FormTable.COLUMN_START_TIME));
         sAHydrate(cursor.getString(cursor.getColumnIndex(FormTable.COLUMN_SA)));
         sBHydrate(cursor.getString(cursor.getColumnIndex(FormTable.COLUMN_SB)));
+        lCHydrate(cursor.getString(cursor.getColumnIndex(FormTable.COLUMN_LC)));
 
         return this;
     }
@@ -445,6 +455,15 @@ public class Form extends BaseObservable {
             this.hh08 = json.getString("hh08");
             this.hh09 = json.getString("hh09");
             this.hh10 = json.getString("hh10");
+
+        }
+    }
+
+    public void lCHydrate(String string) throws JSONException {
+        Log.d(TAG, "lCHydrate: " + string);
+        if (string != null) {
+            JSONObject json = null;
+            json = new JSONObject(string);
             this.hh11 = json.getString("hh11");
             this.hh12 = json.getString("hh12");
             this.hh13 = json.getString("hh13");
@@ -477,12 +496,24 @@ public class Form extends BaseObservable {
         Log.d(TAG, "sBtoString: ");
         JSONObject json = new JSONObject();
 
-        json.put("hh07", hh07)
-                .put("hh0717x", hh0717x)
-                .put("hh08", hh08)
-                .put("hh09", hh09)
-                .put("hh10", hh10)
-                .put("hh11", hh11)
+        json.put("hh11", hh11)
+                .put("hh12", hh12)
+                .put("hh13", hh13)
+                .put("hh14", hh14)
+                .put("hh15", hh15)
+                .put("hh16", hh16)
+                .put("hh17", hh17)
+                .put("hh18", hh18)
+                .put("hh19", hh19);
+        return json.toString();
+    }
+
+
+    public String lCtoString() throws JSONException {
+        Log.d(TAG, "lCtoString: ");
+        JSONObject json = new JSONObject();
+
+        json.put("hh11", hh11)
                 .put("hh12", hh12)
                 .put("hh13", hh13)
                 .put("hh14", hh14)
@@ -510,16 +541,23 @@ public class Form extends BaseObservable {
         json.put(FormTable.COLUMN_SYNCED_DATE, this.syncDate);
         json.put(FormTable.COLUMN_SA, new JSONObject(sAtoString()));
         json.put(FormTable.COLUMN_SB, new JSONObject(sBtoString()));
+        json.put(FormTable.COLUMN_LC, new JSONObject(lCtoString()));
         json.put(FormTable.COLUMN_END_TIME, this.endTime);
         json.put(FormTable.COLUMN_START_TIME, this.startTime);
 
+        json.put(FormTable.COLUMN_SA, this.sA);
+        json.put(FormTable.COLUMN_SB, this.sB);
+        json.put(FormTable.COLUMN_LC, this.lC);
 
-        if (this.sA != null && !this.sA.equals("")) {
+/*        if (this.sA != null && !this.sA.equals("")) {
             json.put(FormTable.COLUMN_SA, new JSONObject(this.sA));
         }
         if (this.sB != null && !this.sB.equals("")) {
             json.put(FormTable.COLUMN_SB, new JSONObject(this.sB));
         }
+        if (this.lC != null && !this.lC.equals("")) {
+            json.put(FormTable.COLUMN_LC, new JSONObject(this.lC));
+        }*/
 
         return json;
 
