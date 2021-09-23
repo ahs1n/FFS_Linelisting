@@ -4,7 +4,6 @@
     package="edu.aku.hassannaqvi.ffs_linelisting">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.hardware.location.gps" /> <!-- To auto-complete the email text field in the login form with the user's emails -->
@@ -23,7 +22,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
-        android:name="edu.aku.hassannaqvi.ffs_linelisting.core.MainApp"
+        android:name=".core.MainApp"
         android:allowBackup="true"
         android:icon="@drawable/app_icon"
         android:immersive="true"
@@ -32,13 +31,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-
-
         <activity
-            android:name="edu.aku.hassannaqvi.ffs_linelisting.ui.LoginActivity"
+            android:name=".ui.LoginActivity"
+            android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.splashscreen"
-            android:exported="true"
             android:windowSoftInputMode="adjustResize|stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -46,30 +43,34 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
         <activity
-            android:name="edu.aku.hassannaqvi.ffs_linelisting.database.AndroidManager"
+            android:name=".database.AndroidManager"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
-
         <activity
-            android:name="edu.aku.hassannaqvi.ffs_linelisting.ui.sections.SectionAActivity"
+            android:name=".ui.sections.SectionAActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeUrdu"
             android:windowSoftInputMode="adjustResize" />
-
         <activity
-            android:name="edu.aku.hassannaqvi.ffs_linelisting.ui.SyncActivity"
+            android:name=".ui.sections.SectionBActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeUrdu"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.sections.FamilyListingActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeUrdu"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.SyncActivity"
             android:exported="true"
-            android:parentActivityName="edu.aku.hassannaqvi.ffs_linelisting.MainActivity"
+            android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
-
         <activity
-            android:name="edu.aku.hassannaqvi.ffs_linelisting.MainActivity"
+            android:name=".MainActivity"
             android:windowSoftInputMode="adjustResize|stateHidden" />
-
     </application>
 
 </manifest>

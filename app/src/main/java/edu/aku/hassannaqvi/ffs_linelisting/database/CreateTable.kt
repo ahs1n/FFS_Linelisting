@@ -24,7 +24,8 @@ object CreateTable {
             + FormTable.COLUMN_SYNCED + " TEXT,"
             + FormTable.COLUMN_SYNCED_DATE + " TEXT,"
             + FormTable.COLUMN_APPVERSION + " TEXT,"
-            + FormTable.COLUMN_SA + " TEXT"
+            + FormTable.COLUMN_SA + " TEXT,"
+            + FormTable.COLUMN_SB + " TEXT"
             + " );"
             )
 

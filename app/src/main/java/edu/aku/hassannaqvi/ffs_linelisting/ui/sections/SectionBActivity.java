@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import com.validatorcrawler.aliazaz.Clear;
 import com.validatorcrawler.aliazaz.Validator;
 
 import org.json.JSONException;
@@ -23,29 +24,31 @@ import edu.aku.hassannaqvi.ffs_linelisting.R;
 import edu.aku.hassannaqvi.ffs_linelisting.contracts.TableContracts;
 import edu.aku.hassannaqvi.ffs_linelisting.core.MainApp;
 import edu.aku.hassannaqvi.ffs_linelisting.database.DatabaseHelper;
-import edu.aku.hassannaqvi.ffs_linelisting.databinding.ActivitySectionABinding;
+import edu.aku.hassannaqvi.ffs_linelisting.databinding.ActivitySectionBBinding;
 import edu.aku.hassannaqvi.ffs_linelisting.models.Form;
 
-public class SectionAActivity extends AppCompatActivity {
-    private static final String TAG = "SectionCRActivity";
-    ActivitySectionABinding bi;
+public class SectionBActivity extends AppCompatActivity {
+    private static final String TAG = "SectionBActivity";
+    ActivitySectionBBinding bi;
     String st = "";
     private DatabaseHelper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        bi = DataBindingUtil.setContentView(this, R.layout.activity_section_a);
+        bi = DataBindingUtil.setContentView(this, R.layout.activity_section_b);
         bi.setCallback(this);
         st = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH).format(new Date().getTime());
         setupSkips();
         setSupportActionBar(bi.toolbar);
         db = MainApp.appInfo.dbHelper;
-
     }
 
-
     private void setupSkips() {
+
+        bi.hh07.setOnCheckedChangeListener((radioGroup, i) -> Clear.clearAllFields(bi.fldGrpCVhh08));
+
+        bi.hh09.setOnCheckedChangeListener((radioGroup, i) -> Clear.clearAllFields(bi.fldGrpCVhh10));
     }
 
 
@@ -85,7 +88,7 @@ public class SectionAActivity extends AppCompatActivity {
         saveDraft();
         if (insertRecord()) {
             finish();
-            startActivity(new Intent(this, SectionBActivity.class));
+            startActivity(new Intent(this, FamilyListingActivity.class));
         } else Toast.makeText(this, "Failed to Update Database!", Toast.LENGTH_SHORT).show();
     }
 
@@ -100,24 +103,41 @@ public class SectionAActivity extends AppCompatActivity {
         sa.setStartTime(st);
         sa.setEndTime(new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH).format(new Date().getTime()));
 
+        sa.setHh07(bi.hh0701.isChecked() ? "1"
+                : bi.hh0702.isChecked() ? "2"
+                : bi.hh0703.isChecked() ? "3"
+                : bi.hh0704.isChecked() ? "4"
+                : bi.hh0705.isChecked() ? "5"
+                : bi.hh0706.isChecked() ? "6"
+                : bi.hh0707.isChecked() ? "7"
+                : bi.hh0708.isChecked() ? "8"
+                : bi.hh0709.isChecked() ? "9"
+                : bi.hh0710.isChecked() ? "10"
+                : bi.hh0711.isChecked() ? "11"
+                : bi.hh0712.isChecked() ? "12"
+                : bi.hh0713.isChecked() ? "13"
+                : bi.hh0714.isChecked() ? "14"
+                : bi.hh0715.isChecked() ? "15"
+                : bi.hh0716.isChecked() ? "16"
+                : bi.hh0717.isChecked() ? "96"
+                : bi.hh0718.isChecked() ? "18"
+                : bi.hh0719.isChecked() ? "19"
+                : "-1");
 
-        sa.setHh01(bi.hh01.getText().toString());
+        sa.setHh0717x(bi.hh0717x.getText().toString());
+        sa.setHh08(bi.hh08.getText().toString());
 
-        sa.setHh02(bi.hh02.getText().toString());
+        sa.setHh09(bi.hh0801.isChecked() ? "1"
+                : bi.hh0802.isChecked() ? "2"
+                : "-1");
 
-        sa.setHh03(bi.hh03.getText().toString());
-
-        sa.setHh04(bi.hh04.getText().toString());
-
-        sa.setHh05(bi.hh05.getText().toString());
-
-        sa.setHh06(bi.hh06.getText().toString());
+        sa.setHh10(bi.hh10.getText().toString());
 
         try {
             sa.setsA(sa.sAtoString());
         } catch (JSONException e) {
             e.printStackTrace();
-            Toast.makeText(this, "JSONException(SA): " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "JSONException(SB): " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
 
     }

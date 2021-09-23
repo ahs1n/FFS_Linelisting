@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import com.validatorcrawler.aliazaz.Clear;
 import com.validatorcrawler.aliazaz.Validator;
 
 import org.json.JSONException;
@@ -23,19 +24,19 @@ import edu.aku.hassannaqvi.ffs_linelisting.R;
 import edu.aku.hassannaqvi.ffs_linelisting.contracts.TableContracts;
 import edu.aku.hassannaqvi.ffs_linelisting.core.MainApp;
 import edu.aku.hassannaqvi.ffs_linelisting.database.DatabaseHelper;
-import edu.aku.hassannaqvi.ffs_linelisting.databinding.ActivitySectionABinding;
+import edu.aku.hassannaqvi.ffs_linelisting.databinding.ActivityFamilyListingBinding;
 import edu.aku.hassannaqvi.ffs_linelisting.models.Form;
 
-public class SectionAActivity extends AppCompatActivity {
-    private static final String TAG = "SectionCRActivity";
-    ActivitySectionABinding bi;
+public class FamilyListingActivity extends AppCompatActivity {
+    private static final String TAG = "FamilyListingActivity";
+    ActivityFamilyListingBinding bi;
     String st = "";
     private DatabaseHelper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        bi = DataBindingUtil.setContentView(this, R.layout.activity_section_a);
+        bi = DataBindingUtil.setContentView(this, R.layout.activity_family_listing);
         bi.setCallback(this);
         st = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH).format(new Date().getTime());
         setupSkips();
@@ -44,10 +45,11 @@ public class SectionAActivity extends AppCompatActivity {
 
     }
 
-
     private void setupSkips() {
-    }
 
+        bi.hh14.setOnCheckedChangeListener((radioGroup, i) -> Clear.clearAllFields(bi.fldGrpa14a));
+
+    }
 
     private boolean insertRecord() {
         long rowId = 0;
@@ -89,7 +91,6 @@ public class SectionAActivity extends AppCompatActivity {
         } else Toast.makeText(this, "Failed to Update Database!", Toast.LENGTH_SHORT).show();
     }
 
-
     private void saveDraft() {
         sa = new Form();
         sa.setSysDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH).format(new Date().getTime()));
@@ -100,24 +101,31 @@ public class SectionAActivity extends AppCompatActivity {
         sa.setStartTime(st);
         sa.setEndTime(new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH).format(new Date().getTime()));
 
+        sa.setHh11(bi.hh11.getText().toString());
 
-        sa.setHh01(bi.hh01.getText().toString());
+        sa.setHh12(bi.hh12.getText().toString());
 
-        sa.setHh02(bi.hh02.getText().toString());
+        sa.setHh13(bi.hh13.getText().toString());
 
-        sa.setHh03(bi.hh03.getText().toString());
+        sa.setHh14(bi.hh1401.isChecked() ? "1"
+                : bi.hh1402.isChecked() ? "2"
+                : "-1");
 
-        sa.setHh04(bi.hh04.getText().toString());
+        sa.setHh15(bi.hh15.getText().toString());
 
-        sa.setHh05(bi.hh05.getText().toString());
+        sa.setHh16(bi.hh16.getText().toString());
 
-        sa.setHh06(bi.hh06.getText().toString());
+        sa.setHh17(bi.hh17.getText().toString());
+
+        sa.setHh18(bi.hh18.getText().toString());
+
+        sa.setHh19(bi.hh19.getText().toString());
 
         try {
             sa.setsA(sa.sAtoString());
         } catch (JSONException e) {
             e.printStackTrace();
-            Toast.makeText(this, "JSONException(SA): " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "JSONException(SB): " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
 
     }
