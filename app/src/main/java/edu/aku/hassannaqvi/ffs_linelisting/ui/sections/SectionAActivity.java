@@ -58,7 +58,6 @@ public class SectionAActivity extends AppCompatActivity {
 
 
     private boolean insertRecord() {
-        DatabaseHelper db = MainApp.appInfo.getDbHelper();
         long rowId = 0;
 
         try {

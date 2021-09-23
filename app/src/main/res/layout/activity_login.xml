@@ -41,7 +41,7 @@
                 android:layout_width="480px"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:background="@color/blackOverlay"
+                android:background="@color/whiteOverlay"
                 android:gravity="center"
                 android:orientation="vertical"
                 android:paddingTop="8dp"
@@ -61,7 +61,7 @@
                     android:gravity="center"
                     android:padding="24dp"
                     android:text="@string/app_name"
-                    android:textColor="@color/white"
+                    android:textColor="@color/colorPrimary"
                     android:textSize="24dp" />
 
                 <TextView
@@ -237,7 +237,8 @@
                     android:shadowDy="1"
                     android:shadowRadius="1"
                     android:text="Ver."
-                    android:textColor="#989898"
+                    android:background="@color/whiteOverlay"
+                    android:textColor="@color/blackOverlay"
                     android:textSize="11sp" />
             </LinearLayout>
 

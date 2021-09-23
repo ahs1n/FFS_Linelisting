@@ -14,7 +14,7 @@
     <string name="invalidpass">Invalid Password</string>
     <string name="unameRequired">Username is required.</string>
     <string name="incorrcetPass">Incorrect Password</string>
-    <string name="downData">Please download data before login</string>
+    <string name="downData">Download Data</string>
     <string name="permission">Permissions Required</string>
     <string name="warning">Warning</string>
     <string name="newApp">New App downloaded!!</string>
