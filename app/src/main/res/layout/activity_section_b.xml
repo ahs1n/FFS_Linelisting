@@ -1,15 +1,15 @@
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+  <layout xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
+      <data>
 
-        <import type="android.view.View" />
+          <import type="android.view.View" />
 
-        <!--        <variable
-                    name="form"
-                    type="edu.aku.hassannaqvi.ffs_linelisting.models.Form" />-->
+          <!--        <variable
+                      name="form"
+                      type="edu.aku.hassannaqvi.ffs_linelisting.models.Form" />-->
 
-        <variable
+          <variable
             name="callback"
             type="edu.aku.hassannaqvi.ffs_linelisting.ui.sections.SectionBActivity" />
     </data>
@@ -32,6 +32,30 @@
             app:subtitleTextAppearance="@style/Toolbar.SubtitleText"
             app:title="@string/listitle"
             app:titleTextAppearance="@style/Toolbar.TitleText" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/fldGrpCVhh20"
+            style="@style/cardView">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:id="@+id/hhid"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/grayLight"
+                    android:gravity="center"
+                    android:text="1010-234"
+                    android:textColor="@color/redLight"
+                    android:textSize="56sp" />
+
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
         <ScrollView
             android:layout_width="match_parent"
@@ -202,7 +226,8 @@
                                 android:text="@string/hh0719" />
                         </RadioGroup>
                     </LinearLayout>
-                </androidx.cardview.widget.CardView>
+
+                </androidx.cardview.widget.CardView><!-- hh07  Radio   -->
 
 
                 <!-- hh08  Input   -->
@@ -298,48 +323,7 @@
                 </androidx.cardview.widget.CardView>
 
 
-                <!-- hh10  Input-Numeric   -->
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/fldGrpCVhh10"
-                    style="@style/cardView"
-                    android:visibility='@{hh0802.checked? View.GONE : View.VISIBLE}'>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/bottom"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                style="@style/quesNum"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:text="@string/Q_hh10" />
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:text="@string/hh10" />
-                        </LinearLayout>
-
-                        <com.edittextpicker.aliazaz.EditTextPicker
-                            android:id="@+id/hh10"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="@string/hh10"
-                            android:inputType="number"
-                            android:maxLength="3"
-                            app:maxValue="100"
-                            app:minValue="1"
-                            app:type="range" />
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
 
                 <!--EndButton LinearLayout-->
                 <LinearLayout
@@ -366,7 +350,7 @@
                         android:layout_marginStart="12dp"
                         android:background="@color/greenLight"
                         android:onClick="btnContinue"
-                        android:text="Save"
+                        android:text="Continue to next"
                         android:textColor="@color/white" />
                 </LinearLayout>
             </LinearLayout>

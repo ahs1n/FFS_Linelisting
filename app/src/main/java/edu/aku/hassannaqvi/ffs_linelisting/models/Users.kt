@@ -33,10 +33,10 @@ class Users {
     }
 
     fun hydrate(cursor: Cursor): Users {
-        userID = cursor.getLong(cursor.getColumnIndex(UsersTable.COLUMN_ID))
-        userName = cursor.getString(cursor.getColumnIndex(UsersTable.COLUMN_USERNAME))
-        password = cursor.getString(cursor.getColumnIndex(UsersTable.COLUMN_PASSWORD))
-        fullname = cursor.getString(cursor.getColumnIndex(UsersTable.COLUMN_FULLNAME))
+        userID = cursor.getLong(cursor.getColumnIndexOrThrow(UsersTable.COLUMN_ID))
+        userName = cursor.getString(cursor.getColumnIndexOrThrow(UsersTable.COLUMN_USERNAME))
+        password = cursor.getString(cursor.getColumnIndexOrThrow(UsersTable.COLUMN_PASSWORD))
+        fullname = cursor.getString(cursor.getColumnIndexOrThrow(UsersTable.COLUMN_FULLNAME))
         return this
     }
 

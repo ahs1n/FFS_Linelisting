@@ -49,9 +49,8 @@ import java.util.concurrent.TimeUnit;
 
 import edu.aku.hassannaqvi.ffs_linelisting.R;
 import edu.aku.hassannaqvi.ffs_linelisting.adapters.SyncListAdapter;
+import edu.aku.hassannaqvi.ffs_linelisting.contracts.TableContracts.EnumBlocksTable;
 import edu.aku.hassannaqvi.ffs_linelisting.contracts.TableContracts.FormTable;
-import edu.aku.hassannaqvi.ffs_linelisting.contracts.TableContracts.UsersTable;
-import edu.aku.hassannaqvi.ffs_linelisting.contracts.TableContracts.VersionTable;
 import edu.aku.hassannaqvi.ffs_linelisting.core.MainApp;
 import edu.aku.hassannaqvi.ffs_linelisting.database.DatabaseHelper;
 import edu.aku.hassannaqvi.ffs_linelisting.databinding.ActivitySyncBinding;
@@ -164,9 +163,10 @@ public class SyncActivity extends AppCompatActivity {
                 bi.pBar.setVisibility(View.GONE);
                 downloadTables.clear();
                 boolean sync_flag = getIntent().getBooleanExtra("login", false);
-
+/*
                 downloadTables.add(new SyncModel(UsersTable.TABLE_NAME));
-                downloadTables.add(new SyncModel(VersionTable.TABLE_NAME));
+                downloadTables.add(new SyncModel(VersionTable.TABLE_NAME));*/
+                downloadTables.add(new SyncModel(EnumBlocksTable.TABLE_NAME));
 
                 MainApp.downloadData = new String[downloadTables.size()];
                 setAdapter(downloadTables);
@@ -236,14 +236,19 @@ public class SyncActivity extends AppCompatActivity {
                                 JSONArray jsonArray = new JSONArray();
                                 int insertCount = 0;
                                 switch (tableName) {
-                                    case UsersTable.TABLE_NAME:
+                         /*           case UsersTable.TABLE_NAME:
                                         jsonArray = new JSONArray(result);
                                         insertCount = db.syncUser(jsonArray);
+                                        break;*/
+                                    case EnumBlocksTable.TABLE_NAME:
+                                        jsonArray = new JSONArray(result);
+                                        insertCount = db.syncEnumBlocks(jsonArray);
                                         break;
-                                    case VersionTable.TABLE_NAME:
+                             /*       case VersionTable.TABLE_NAME:
                                         insertCount = db.syncVersionApp(new JSONObject(result));
                                         if (insertCount == 1) jsonArray.put("1");
                                         break;
+*/
 
                                 }
 

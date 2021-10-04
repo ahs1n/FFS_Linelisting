@@ -48,4 +48,13 @@ object CreateTable {
             + VersionTable.COLUMN_PATH_NAME + " TEXT "
             + ");"
             )
+
+    const val SQL_CREATE_ENUMBLOCKS = ("CREATE TABLE "
+            + EnumBlocksTable.TABLE_NAME + "("
+            + EnumBlocksTable.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + EnumBlocksTable.COLUMN_DISTRICT_NAME + " TEXT,"
+            + EnumBlocksTable.COLUMN_TEHSIL_NAME + " TEXT,"
+            + EnumBlocksTable.COLUMN_ENUM_BLOCK_CODE + " TEXT"
+            + " );"
+            )
 }

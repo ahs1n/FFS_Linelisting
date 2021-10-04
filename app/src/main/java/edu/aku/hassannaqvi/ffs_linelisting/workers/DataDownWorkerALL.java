@@ -40,7 +40,7 @@ public class DataDownWorkerALL extends Worker {
     private final String uploadTable;
     private final String uploadWhere;
     private final URL serverURL = null;
-    private final String nTitle = "Naunehal: Data Download";
+    private final String nTitle = PROJECT_NAME + ": Data Download";
     HttpURLConnection urlConnection;
     private ProgressDialog pd;
     private int length;
@@ -84,7 +84,8 @@ public class DataDownWorkerALL extends Worker {
             } else {
                 url = serverURL;
             }
-            Log.d(TAG, "doWork: Connecting...");
+            Log.d(TAG, "doWork: Connecting... " + url.toString());
+            Log.d(TAG, "downloadURL: " + url);
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setReadTimeout(100000 /* milliseconds */);
             urlConnection.setConnectTimeout(150000 /* milliseconds */);
@@ -95,7 +96,6 @@ public class DataDownWorkerALL extends Worker {
             urlConnection.setRequestProperty("charset", "utf-8");
             urlConnection.setUseCaches(false);
             urlConnection.connect();
-            Log.d(TAG, "downloadURL: " + url);
 
             JSONArray jsonSync = new JSONArray();
 

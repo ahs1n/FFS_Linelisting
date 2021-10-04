@@ -1,10 +1,13 @@
 package edu.aku.hassannaqvi.ffs_linelisting.ui.sections;
 
 import static edu.aku.hassannaqvi.ffs_linelisting.core.MainApp.sa;
+import static edu.aku.hassannaqvi.ffs_linelisting.core.MainApp.sharedPref;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,15 +18,17 @@ import com.validatorcrawler.aliazaz.Validator;
 import org.json.JSONException;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Locale;
 
 import edu.aku.hassannaqvi.ffs_linelisting.MainActivity;
 import edu.aku.hassannaqvi.ffs_linelisting.R;
-import edu.aku.hassannaqvi.ffs_linelisting.contracts.TableContracts;
 import edu.aku.hassannaqvi.ffs_linelisting.core.MainApp;
 import edu.aku.hassannaqvi.ffs_linelisting.database.DatabaseHelper;
 import edu.aku.hassannaqvi.ffs_linelisting.databinding.ActivitySectionABinding;
+import edu.aku.hassannaqvi.ffs_linelisting.models.EnumBlocks;
 import edu.aku.hassannaqvi.ffs_linelisting.models.Form;
 
 public class SectionAActivity extends AppCompatActivity {
@@ -31,6 +36,10 @@ public class SectionAActivity extends AppCompatActivity {
     ActivitySectionABinding bi;
     String st = "";
     private DatabaseHelper db;
+    private ArrayList<String> ebCode;
+    private ArrayList<String> districtNames;
+    private ArrayList<String> tehsilNames;
+    private ArrayList<String> headHH;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,15 +51,59 @@ public class SectionAActivity extends AppCompatActivity {
         setSupportActionBar(bi.toolbar);
         db = MainApp.appInfo.dbHelper;
 
+        populateSpinner();
     }
 
 
     private void setupSkips() {
     }
 
+    private void populateSpinner() {
+        Collection<EnumBlocks> enumBlocks = db.getEnumBlocks();
+        ebCode = new ArrayList<>();
+        districtNames = new ArrayList<>();
+        tehsilNames = new ArrayList<>();
+        for (EnumBlocks eb : enumBlocks) {
+            ebCode.add(eb.getEnumBlock());
+
+            districtNames.add(eb.getDistrictName());
+            tehsilNames.add(eb.getTehsilName()); //
+        }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_dropdown_item_1line, ebCode);
+
+        bi.hh01.setAdapter(adapter);
+
+        bi.hh01.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                int position = ebCode.indexOf(bi.hh01.getText().toString());
+                bi.hh04.setText(districtNames.get(position));
+                bi.hh05.setText(tehsilNames.get(position));
+
+                ArrayList<String> households = new ArrayList<String>();
+
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(SectionAActivity.this,
+                        android.R.layout.simple_dropdown_item_1line, households);
+
+                bi.hh01.setAdapter(adapter);
+
+            }
+        });
+
+
+    }
 
     private boolean insertRecord() {
-        long rowId = 0;
+        MainApp.selectedCluster = bi.hh01.getText().toString();
+        MainApp.maxStructure = Integer.parseInt(sharedPref.getString(MainApp.selectedCluster, "0"));
+
+
+        return true;
+       /* long rowId = 0;
 
         try {
             rowId = db.addCR(sa);
@@ -76,7 +129,7 @@ public class SectionAActivity extends AppCompatActivity {
             Toast.makeText(this, "JSONException(CR):" + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
 
-        return false;
+        return false;*/
     }
 
 
@@ -103,15 +156,16 @@ public class SectionAActivity extends AppCompatActivity {
 
         sa.setHh01(bi.hh01.getText().toString());
 
-        sa.setHh02(bi.hh02.getText().toString());
+/*        sa.setHh02(bi.hh02.getText().toString());
 
-        sa.setHh03(bi.hh03.getText().toString());
+        sa.setHh03(bi.hh03.getText().toString());*/
 
         sa.setHh04(bi.hh04.getText().toString());
 
         sa.setHh05(bi.hh05.getText().toString());
 
         sa.setHh06(bi.hh06.getText().toString());
+        sa.setHh20(String.valueOf(MainApp.maxStructure));
 
         try {
             sa.setsA(sa.sAtoString());

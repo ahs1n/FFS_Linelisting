@@ -43,6 +43,9 @@ public class FamilyListingActivity extends AppCompatActivity {
         setSupportActionBar(bi.toolbar);
         db = MainApp.appInfo.dbHelper;
 
+        MainApp.hhid++;
+        bi.hhid.setText(MainApp.maxStructure + "-" + MainApp.hhid);
+
     }
 
     private void setupSkips() {
@@ -87,7 +90,12 @@ public class FamilyListingActivity extends AppCompatActivity {
         saveDraft();
         if (insertRecord()) {
             finish();
-            startActivity(new Intent(this, SectionBActivity.class));
+            if (view == bi.btnContinue) {
+                startActivity(new Intent(this, SectionBActivity.class));
+            } else {
+                startActivity(new Intent(this, FamilyListingActivity.class));
+
+            }
         } else Toast.makeText(this, "Failed to Update Database!", Toast.LENGTH_SHORT).show();
     }
 
@@ -120,6 +128,7 @@ public class FamilyListingActivity extends AppCompatActivity {
         sa.setHh18(bi.hh18.getText().toString());
 
         sa.setHh19(bi.hh19.getText().toString());
+        sa.setHh21(String.valueOf(MainApp.hhid));
 
         try {
             sa.setsA(sa.sAtoString());

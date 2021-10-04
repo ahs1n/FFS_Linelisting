@@ -2,6 +2,7 @@ package edu.aku.hassannaqvi.ffs_linelisting.database;
 
 import static edu.aku.hassannaqvi.ffs_linelisting.database.CreateTable.DATABASE_NAME;
 import static edu.aku.hassannaqvi.ffs_linelisting.database.CreateTable.DATABASE_VERSION;
+import static edu.aku.hassannaqvi.ffs_linelisting.database.CreateTable.SQL_CREATE_ENUMBLOCKS;
 import static edu.aku.hassannaqvi.ffs_linelisting.database.CreateTable.SQL_CREATE_FORM;
 import static edu.aku.hassannaqvi.ffs_linelisting.database.CreateTable.SQL_CREATE_USERS;
 import static edu.aku.hassannaqvi.ffs_linelisting.database.CreateTable.SQL_CREATE_VERSIONAPP;
@@ -20,12 +21,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 
+import edu.aku.hassannaqvi.ffs_linelisting.contracts.TableContracts.EnumBlocksTable;
 import edu.aku.hassannaqvi.ffs_linelisting.contracts.TableContracts.FormTable;
 import edu.aku.hassannaqvi.ffs_linelisting.contracts.TableContracts.UsersTable;
 import edu.aku.hassannaqvi.ffs_linelisting.contracts.TableContracts.VersionTable;
 import edu.aku.hassannaqvi.ffs_linelisting.core.MainApp;
+import edu.aku.hassannaqvi.ffs_linelisting.models.EnumBlocks;
 import edu.aku.hassannaqvi.ffs_linelisting.models.Form;
 import edu.aku.hassannaqvi.ffs_linelisting.models.Users;
 import edu.aku.hassannaqvi.ffs_linelisting.models.VersionApp;
@@ -49,6 +53,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_USERS);
+        db.execSQL(SQL_CREATE_ENUMBLOCKS);
         db.execSQL(SQL_CREATE_FORM);
         db.execSQL(SQL_CREATE_VERSIONAPP);
 
@@ -205,10 +210,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             );
             while (c.moveToNext()) {
                 Form forms = new Form();
-                forms.setId(c.getString(c.getColumnIndex(FormTable.COLUMN_ID)));
-                forms.setUid(c.getString(c.getColumnIndex(FormTable.COLUMN_UID)));
-                forms.setSysDate(c.getString(c.getColumnIndex(FormTable.COLUMN_SYSDATE)));
-                forms.setUserName(c.getString(c.getColumnIndex(FormTable.COLUMN_USERNAME)));
+                forms.setId(c.getString(c.getColumnIndexOrThrow(FormTable.COLUMN_ID)));
+                forms.setUid(c.getString(c.getColumnIndexOrThrow(FormTable.COLUMN_UID)));
+                forms.setSysDate(c.getString(c.getColumnIndexOrThrow(FormTable.COLUMN_SYSDATE)));
+                forms.setUserName(c.getString(c.getColumnIndexOrThrow(FormTable.COLUMN_USERNAME)));
                 allForms.add(forms);
             }
         } finally {
@@ -376,40 +381,35 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return insertCount;
     }
-/*
 
-    public int syncClusters(JSONArray clusterList) {
+
+    public int syncEnumBlocks(JSONArray clusterList) throws JSONException {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(ClustersTable.TABLE_NAME, null, null);
+        db.delete(EnumBlocksTable.TABLE_NAME, null, null);
         int insertCount = 0;
-        try {
-            for (int i = 0; i < clusterList.length(); i++) {
 
-                JSONObject json = clusterList.getJSONObject(i);
+        for (int i = 0; i < clusterList.length(); i++) {
 
-                Clusters cluster = new Clusters();
-                cluster.sync(json);
-                ContentValues values = new ContentValues();
+            JSONObject json = clusterList.getJSONObject(i);
 
-                values.put(ClustersTable.COLUMN_DISTRICT_NAME, cluster.getDistrictName());
-                values.put(ClustersTable.COLUMN_DISTRICT_CODE, cluster.getDistrictCode());
-                values.put(ClustersTable.COLUMN_CITY_NAME, cluster.getCityName());
-                values.put(ClustersTable.COLUMN_CITY_CODE, cluster.getCityCode());
-                values.put(ClustersTable.COLUMN_CLUSTER_NO, cluster.getClusterNo());
-                long rowID = db.insert(ClustersTable.TABLE_NAME, null, values);
-                if (rowID != -1) insertCount++;
-            }
+            EnumBlocks cluster = new EnumBlocks();
+            cluster.sync(json);
+            ContentValues values = new ContentValues();
 
-        } catch (Exception e) {
-            Log.d(TAG, "syncClusters(e): " + e);
-            db.close();
-        } finally {
-            db.close();
+            values.put(EnumBlocksTable.COLUMN_DISTRICT_NAME, cluster.getDistrictName());
+            values.put(EnumBlocksTable.COLUMN_TEHSIL_NAME, cluster.getTehsilName());
+            values.put(EnumBlocksTable.COLUMN_ENUM_BLOCK_CODE, cluster.getEnumBlock());
+            long rowID = db.insert(EnumBlocksTable.TABLE_NAME, null, values);
+            if (rowID != -1) insertCount++;
         }
+
+
+            db.close();
+
         return insertCount;
     }
 
-    public int syncRandom(JSONArray list) {
+/*    public int syncRandom(JSONArray list) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(RandomTable.TABLE_NAME, null, null);
         int insertCount = 0;
@@ -572,5 +572,49 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             alc.set(1, Cursor2);
             return alc;
         }
+    }
+
+    public Collection<EnumBlocks> getEnumBlocks() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = null;
+        String[] columns = null;
+
+        String whereClause = null;
+
+        String[] whereArgs = null;
+
+        String groupBy = null;
+        String having = null;
+
+        String orderBy = EnumBlocksTable.COLUMN_ENUM_BLOCK_CODE + " ASC";
+        String limit = "2000";
+
+        Collection<EnumBlocks> enumBlocks = new ArrayList<>();
+        try {
+            c = db.query(
+                    true,
+                    EnumBlocksTable.TABLE_NAME,  // The table to query
+                    columns,                   // The columns to return
+                    whereClause,               // The columns for the WHERE clause
+                    whereArgs,                 // The values for the WHERE clause
+                    groupBy,                   // don't group the rows
+                    having,                    // don't filter by row groups
+                    orderBy,
+                    limit //The sort order
+            );
+            while (c.moveToNext()) {
+                EnumBlocks e = new EnumBlocks();
+                enumBlocks.add(e.hydrate(c));
+            }
+        } finally {
+            if (c != null) {
+                c.close();
+            }
+            if (db != null) {
+                db.close();
+            }
+        }
+        return enumBlocks;
+
     }
 }

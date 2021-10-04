@@ -6,6 +6,8 @@ public class SyncModel {
     String tableName;
     String status;
     int statusID;
+    int maxProgress = 0;
+    int curProgress = 0;
     String message;
     String filter = null;
     String select = null;
@@ -88,5 +90,21 @@ public class SyncModel {
 
     public void setSelect(String select) {
         this.select = select;
+    }
+
+    public int getMaxProgress() {
+        return maxProgress;
+    }
+
+    public void setMaxProgress(int maxProgress) {
+        this.maxProgress = maxProgress;
+    }
+
+    public int getCurProgress() {
+        return curProgress;
+    }
+
+    public void setCurProgress(int curProgress) {
+        this.curProgress = curProgress;
     }
 }

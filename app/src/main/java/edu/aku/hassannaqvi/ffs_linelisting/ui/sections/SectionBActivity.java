@@ -1,5 +1,6 @@
 package edu.aku.hassannaqvi.ffs_linelisting.ui.sections;
 
+import static edu.aku.hassannaqvi.ffs_linelisting.core.MainApp.editor;
 import static edu.aku.hassannaqvi.ffs_linelisting.core.MainApp.sa;
 
 import android.content.Intent;
@@ -25,7 +26,6 @@ import edu.aku.hassannaqvi.ffs_linelisting.contracts.TableContracts;
 import edu.aku.hassannaqvi.ffs_linelisting.core.MainApp;
 import edu.aku.hassannaqvi.ffs_linelisting.database.DatabaseHelper;
 import edu.aku.hassannaqvi.ffs_linelisting.databinding.ActivitySectionBBinding;
-import edu.aku.hassannaqvi.ffs_linelisting.models.Form;
 
 public class SectionBActivity extends AppCompatActivity {
     private static final String TAG = "SectionBActivity";
@@ -42,13 +42,16 @@ public class SectionBActivity extends AppCompatActivity {
         setupSkips();
         setSupportActionBar(bi.toolbar);
         db = MainApp.appInfo.dbHelper;
+
+        MainApp.maxStructure++;
+        bi.hhid.setText(String.valueOf(MainApp.maxStructure));
     }
 
     private void setupSkips() {
 
         bi.hh07.setOnCheckedChangeListener((radioGroup, i) -> Clear.clearAllFields(bi.fldGrpCVhh08));
 
-        bi.hh09.setOnCheckedChangeListener((radioGroup, i) -> Clear.clearAllFields(bi.fldGrpCVhh10));
+        //   bi.hh09.setOnCheckedChangeListener((radioGroup, i) -> Clear.clearAllFields(bi.fldGrpCVhh10));
     }
 
 
@@ -67,6 +70,10 @@ public class SectionBActivity extends AppCompatActivity {
                 updCount = db.updateCrColumn(TableContracts.FormTable.COLUMN_UID, sa.getUid());
 
                 if (updCount > 0) {
+
+                    editor.putString(MainApp.selectedCluster, String.valueOf(MainApp.maxStructure));
+                    editor.apply();
+
                     return true;
                 }
 
@@ -88,13 +95,21 @@ public class SectionBActivity extends AppCompatActivity {
         saveDraft();
         if (insertRecord()) {
             finish();
-            startActivity(new Intent(this, FamilyListingActivity.class));
+            Intent i = null;
+            if (sa.getHh07().equals("1")) {
+                i = new Intent(this, FamilyListingActivity.class);
+                MainApp.hhid = 0;
+            } else {
+                i = new Intent(this, SectionBActivity.class);
+            }
+
+            startActivity(i);
         } else Toast.makeText(this, "Failed to Update Database!", Toast.LENGTH_SHORT).show();
     }
 
 
     private void saveDraft() {
-        sa = new Form();
+        // sa = new Form();
         sa.setSysDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH).format(new Date().getTime()));
         sa.setUserName(MainApp.user.getUserName());
         sa.setDeviceId(MainApp.appInfo.getDeviceID());
@@ -131,7 +146,7 @@ public class SectionBActivity extends AppCompatActivity {
                 : bi.hh0802.isChecked() ? "2"
                 : "-1");
 
-        sa.setHh10(bi.hh10.getText().toString());
+        // sa.setHh10(bi.hh10.getText().toString());
 
         try {
             sa.setsA(sa.sAtoString());

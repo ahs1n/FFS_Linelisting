@@ -29,6 +29,7 @@ public class SyncListAdapter extends RecyclerView.Adapter<SyncListAdapter.SyncLi
         notifyDataSetChanged();
     }
 
+
     @NonNull
     @Override
     public SyncListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -74,6 +75,8 @@ public class SyncListAdapter extends RecyclerView.Adapter<SyncListAdapter.SyncLi
         }
 
         public void bindUser(SyncModel model) {
+            binding.syncBar.setMax(model.getMaxProgress());
+            binding.syncBar.setProgress(model.getCurProgress());
             binding.statusColor.setBackgroundColor(checkStatus(model.getstatusID()));
             binding.tvTableName.setText(model.gettableName().toUpperCase());
             binding.tvStatus.setText(model.getstatus());

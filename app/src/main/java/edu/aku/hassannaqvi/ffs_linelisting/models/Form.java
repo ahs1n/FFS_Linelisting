@@ -59,6 +59,8 @@ public class Form extends BaseObservable {
     private String hh17 = StringUtils.EMPTY;
     private String hh18 = StringUtils.EMPTY;
     private String hh19 = StringUtils.EMPTY;
+    private String hh20 = StringUtils.EMPTY;
+    private String hh21 = StringUtils.EMPTY;
     private String sA = StringUtils.EMPTY;
     private String sB = StringUtils.EMPTY;
     private String lC = StringUtils.EMPTY;
@@ -263,6 +265,26 @@ public class Form extends BaseObservable {
         notifyPropertyChanged(BR.hh19);
     }
 
+    @Bindable
+    public String getHh20() {
+        return hh20;
+    }
+
+    public void setHh20(String hh20) {
+        this.hh20 = hh20;
+        notifyPropertyChanged(BR.hh20);
+    }
+
+    @Bindable
+    public String getHh21() {
+        return hh21;
+    }
+
+    public void setHh21(String hh21) {
+        this.hh21 = hh21;
+        notifyPropertyChanged(BR.hh21);
+    }
+
 
     public String getProjectName() {
         return projectName;
@@ -411,21 +433,21 @@ public class Form extends BaseObservable {
 
 
     public Form Hydrate(Cursor cursor) throws JSONException {
-        this.id = cursor.getString(cursor.getColumnIndex(FormTable.COLUMN_ID));
-        this.uid = cursor.getString(cursor.getColumnIndex(FormTable.COLUMN_UID));
-        this.userName = cursor.getString(cursor.getColumnIndex(FormTable.COLUMN_USERNAME));
-        this.sysDate = cursor.getString(cursor.getColumnIndex(FormTable.COLUMN_SYSDATE));
-        this.deviceId = cursor.getString(cursor.getColumnIndex(FormTable.COLUMN_DEVICEID));
-        this.deviceTag = cursor.getString(cursor.getColumnIndex(FormTable.COLUMN_DEVICETAGID));
-        this.appver = cursor.getString(cursor.getColumnIndex(FormTable.COLUMN_APPVERSION));
-        this.iStatus = cursor.getString(cursor.getColumnIndex(FormTable.COLUMN_ISTATUS));
-        this.synced = cursor.getString(cursor.getColumnIndex(FormTable.COLUMN_SYNCED));
-        this.syncDate = cursor.getString(cursor.getColumnIndex(FormTable.COLUMN_SYNCED_DATE));
-        this.endTime = cursor.getString(cursor.getColumnIndex(FormTable.COLUMN_END_TIME));
-        this.startTime = cursor.getString(cursor.getColumnIndex(FormTable.COLUMN_START_TIME));
-        sAHydrate(cursor.getString(cursor.getColumnIndex(FormTable.COLUMN_SA)));
-        sBHydrate(cursor.getString(cursor.getColumnIndex(FormTable.COLUMN_SB)));
-        lCHydrate(cursor.getString(cursor.getColumnIndex(FormTable.COLUMN_LC)));
+        this.id = cursor.getString(cursor.getColumnIndexOrThrow(FormTable.COLUMN_ID));
+        this.uid = cursor.getString(cursor.getColumnIndexOrThrow(FormTable.COLUMN_UID));
+        this.userName = cursor.getString(cursor.getColumnIndexOrThrow(FormTable.COLUMN_USERNAME));
+        this.sysDate = cursor.getString(cursor.getColumnIndexOrThrow(FormTable.COLUMN_SYSDATE));
+        this.deviceId = cursor.getString(cursor.getColumnIndexOrThrow(FormTable.COLUMN_DEVICEID));
+        this.deviceTag = cursor.getString(cursor.getColumnIndexOrThrow(FormTable.COLUMN_DEVICETAGID));
+        this.appver = cursor.getString(cursor.getColumnIndexOrThrow(FormTable.COLUMN_APPVERSION));
+        this.iStatus = cursor.getString(cursor.getColumnIndexOrThrow(FormTable.COLUMN_ISTATUS));
+        this.synced = cursor.getString(cursor.getColumnIndexOrThrow(FormTable.COLUMN_SYNCED));
+        this.syncDate = cursor.getString(cursor.getColumnIndexOrThrow(FormTable.COLUMN_SYNCED_DATE));
+        this.endTime = cursor.getString(cursor.getColumnIndexOrThrow(FormTable.COLUMN_END_TIME));
+        this.startTime = cursor.getString(cursor.getColumnIndexOrThrow(FormTable.COLUMN_START_TIME));
+        sAHydrate(cursor.getString(cursor.getColumnIndexOrThrow(FormTable.COLUMN_SA)));
+        sBHydrate(cursor.getString(cursor.getColumnIndexOrThrow(FormTable.COLUMN_SB)));
+        lCHydrate(cursor.getString(cursor.getColumnIndexOrThrow(FormTable.COLUMN_LC)));
 
         return this;
     }
@@ -441,6 +463,7 @@ public class Form extends BaseObservable {
             this.hh04 = json.getString("hh04");
             this.hh05 = json.getString("hh05");
             this.hh06 = json.getString("hh06");
+            this.hh20 = json.getString("hh20");
 
         }
     }
@@ -473,6 +496,7 @@ public class Form extends BaseObservable {
             this.hh17 = json.getString("hh17");
             this.hh18 = json.getString("hh18");
             this.hh19 = json.getString("hh19");
+            this.hh21 = json.getString("hh21");
 
         }
     }
@@ -487,7 +511,8 @@ public class Form extends BaseObservable {
                 .put("hh03", hh03)
                 .put("hh04", hh04)
                 .put("hh05", hh05)
-                .put("hh06", hh06);
+                .put("hh06", hh06)
+                .put("hh20", hh20);
         return json.toString();
     }
 
@@ -504,7 +529,8 @@ public class Form extends BaseObservable {
                 .put("hh16", hh16)
                 .put("hh17", hh17)
                 .put("hh18", hh18)
-                .put("hh19", hh19);
+                .put("hh19", hh19)
+                .put("hh21", hh21);
         return json.toString();
     }
 
@@ -521,7 +547,8 @@ public class Form extends BaseObservable {
                 .put("hh16", hh16)
                 .put("hh17", hh17)
                 .put("hh18", hh18)
-                .put("hh19", hh19);
+                .put("hh19", hh19)
+                .put("hh21", hh21);
         return json.toString();
     }
 
