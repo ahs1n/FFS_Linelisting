@@ -4,6 +4,7 @@ import static edu.aku.hassannaqvi.ffs_linelisting.database.CreateTable.DATABASE_
 import static edu.aku.hassannaqvi.ffs_linelisting.database.CreateTable.DATABASE_VERSION;
 import static edu.aku.hassannaqvi.ffs_linelisting.database.CreateTable.SQL_CREATE_ENUMBLOCKS;
 import static edu.aku.hassannaqvi.ffs_linelisting.database.CreateTable.SQL_CREATE_FORM;
+import static edu.aku.hassannaqvi.ffs_linelisting.database.CreateTable.SQL_CREATE_MWRA;
 import static edu.aku.hassannaqvi.ffs_linelisting.database.CreateTable.SQL_CREATE_USERS;
 import static edu.aku.hassannaqvi.ffs_linelisting.database.CreateTable.SQL_CREATE_VERSIONAPP;
 
@@ -26,11 +27,13 @@ import java.util.Date;
 
 import edu.aku.hassannaqvi.ffs_linelisting.contracts.TableContracts.EnumBlocksTable;
 import edu.aku.hassannaqvi.ffs_linelisting.contracts.TableContracts.FormTable;
+import edu.aku.hassannaqvi.ffs_linelisting.contracts.TableContracts.MwraTable;
 import edu.aku.hassannaqvi.ffs_linelisting.contracts.TableContracts.UsersTable;
 import edu.aku.hassannaqvi.ffs_linelisting.contracts.TableContracts.VersionTable;
 import edu.aku.hassannaqvi.ffs_linelisting.core.MainApp;
 import edu.aku.hassannaqvi.ffs_linelisting.models.EnumBlocks;
 import edu.aku.hassannaqvi.ffs_linelisting.models.Form;
+import edu.aku.hassannaqvi.ffs_linelisting.models.Mwra;
 import edu.aku.hassannaqvi.ffs_linelisting.models.Users;
 import edu.aku.hassannaqvi.ffs_linelisting.models.VersionApp;
 
@@ -55,6 +58,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(SQL_CREATE_USERS);
         db.execSQL(SQL_CREATE_ENUMBLOCKS);
         db.execSQL(SQL_CREATE_FORM);
+        db.execSQL(SQL_CREATE_MWRA);
         db.execSQL(SQL_CREATE_VERSIONAPP);
 
     }
@@ -69,7 +73,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     //ADDITION in DB
-    public Long addCR(Form cr) throws JSONException {
+    public Long addForm(Form cr) throws JSONException {
 
         // Gets the data repository in write mode
         SQLiteDatabase db = this.getWritableDatabase();
@@ -99,33 +103,65 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return newRowId;
     }
 
+    //ADDITION in DB
+    public Long addMwra(Mwra mwra) throws JSONException {
+
+        // Gets the data repository in write mode
+        SQLiteDatabase db = this.getWritableDatabase();
+
+// Create a new map of values, where column names are the keys
+        ContentValues values = new ContentValues();
+        values.put(MwraTable.COLUMN_PROJECT_NAME, mwra.getProjectName());
+        values.put(MwraTable.COLUMN_UID, mwra.getUid());
+        values.put(MwraTable.COLUMN_USERNAME, mwra.getUserName());
+        values.put(MwraTable.COLUMN_SYSDATE, mwra.getSysDate());
+        values.put(MwraTable.COLUMN_ISTATUS, mwra.getiStatus());
+        values.put(MwraTable.COLUMN_DEVICETAGID, mwra.getDeviceTag());
+        values.put(MwraTable.COLUMN_DEVICEID, mwra.getDeviceId());
+        values.put(MwraTable.COLUMN_APPVERSION, mwra.getAppver());
+        values.put(MwraTable.COLUMN_START_TIME, mwra.getStartTime());
+        values.put(MwraTable.COLUMN_END_TIME, mwra.getEndTime());
+
+        // Put all JSON as xxtoString()
+        values.put(MwraTable.COLUMN_SMWRA, mwra.sMwratoString());
+
+        // Insert the new row, returning the primary key value of the new row
+        long newRowId;
+        newRowId = db.insert(
+                MwraTable.TABLE_NAME,
+                MwraTable.COLUMN_NAME_NULLABLE,
+                values);
+        return newRowId;
+    }
+
 
     //UPDATE in DB
-    public int updateCrColumn(String column, String value) {
+    public int updateFormColumn(String column, String value) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(column, value);
 
         String selection = FormTable._ID + " =? ";
-        String[] selectionArgs = {String.valueOf(MainApp.sa.getId())};
+        String[] selectionArgs = {String.valueOf(MainApp.form.getId())};
 
         return db.update(FormTable.TABLE_NAME,
                 values,
                 selection,
                 selectionArgs);
     }
+
 
     public int updateEnding() {
         SQLiteDatabase db = this.getReadableDatabase();
 
         // New value for one column
         ContentValues values = new ContentValues();
-        values.put(FormTable.COLUMN_ISTATUS, MainApp.sa.getiStatus());
+        values.put(FormTable.COLUMN_ISTATUS, MainApp.form.getiStatus());
 
         // Which row to update, based on the ID
         String selection = FormTable.COLUMN_ID + " =? ";
-        String[] selectionArgs = {String.valueOf(MainApp.sa.getId())};
+        String[] selectionArgs = {String.valueOf(MainApp.form.getId())};
 
         return db.update(FormTable.TABLE_NAME,
                 values,
@@ -133,7 +169,38 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 selectionArgs);
     }
 
+    //UPDATE in DB
+    public int updateMwraColumn(String column, String value) {
+        SQLiteDatabase db = this.getReadableDatabase();
 
+        ContentValues values = new ContentValues();
+        values.put(column, value);
+
+        String selection = MwraTable._ID + " =? ";
+        String[] selectionArgs = {String.valueOf(MainApp.mwra.getId())};
+
+        return db.update(MwraTable.TABLE_NAME,
+                values,
+                selection,
+                selectionArgs);
+    }
+
+    /*    public int updateEnding() {
+            SQLiteDatabase db = this.getReadableDatabase();
+
+            // New value for one column
+            ContentValues values = new ContentValues();
+            values.put(MwraTable.COLUMN_ISTATUS, MainApp.mwra.getiStatus());
+
+            // Which row to update, based on the ID
+            String selection = MwraTable.COLUMN_ID + " =? ";
+            String[] selectionArgs = {String.valueOf(MainApp.mwra.getId())};
+
+            return db.update(MwraTable.TABLE_NAME,
+                    values,
+                    selection,
+                    selectionArgs);
+        }*/
     /*
      * Functions that dealing with table data
      * */
@@ -490,6 +557,55 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return allCR;
     }
 
+    //get UnSyncedTables
+    public JSONArray getUnsyncedMwra() throws JSONException {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = null;
+        String[] columns = null;
+
+        String whereClause;
+        whereClause = MwraTable.COLUMN_SYNCED + " is null ";
+
+        String[] whereArgs = null;
+
+        String groupBy = null;
+        String having = null;
+
+        String orderBy = MwraTable.COLUMN_ID + " ASC";
+
+        JSONArray allCR = new JSONArray();
+        try {
+            c = db.query(
+                    MwraTable.TABLE_NAME,  // The table to query
+                    columns,                   // The columns to return
+                    whereClause,               // The columns for the WHERE clause
+                    whereArgs,                 // The values for the WHERE clause
+                    groupBy,                   // don't group the rows
+                    having,                    // don't filter by row groups
+                    orderBy                    // The sort order
+            );
+            while (c.moveToNext()) {
+                /** WorkManager Upload
+                 /*Mwra fc = new Mwra();
+                 allFC.add(fc.Hydrate(c));*/
+                Log.d(TAG, "getUnsyncedMwraCR: " + c.getCount());
+                Mwra cr = new Mwra();
+                allCR.put(cr.Hydrate(c).toJSONObject());
+            }
+        } finally {
+            if (c != null) {
+                c.close();
+            }
+            if (db != null) {
+                db.close();
+            }
+        }
+        Log.d(TAG, "getUnsyncedMwraCR: " + allCR.toString().length());
+        Log.d(TAG, "getUnsyncedMwraCR: " + allCR);
+        return allCR;
+    }
+
+
     //update SyncedTables
     public void updateSyncedForm(String id) {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -510,7 +626,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 whereArgs);
     }
 
+    //update SyncedTables
+    public void updateSyncedMwra(String id) {
+        SQLiteDatabase db = this.getReadableDatabase();
 
+// New value for one column
+        ContentValues values = new ContentValues();
+        values.put(MwraTable.COLUMN_SYNCED, true);
+        values.put(MwraTable.COLUMN_SYNCED_DATE, new Date().toString());
+
+// Which row to update, based on the title
+        String where = MwraTable.COLUMN_ID + " = ?";
+        String[] whereArgs = {id};
+
+        int count = db.update(
+                MwraTable.TABLE_NAME,
+                values,
+                where,
+                whereArgs);
+    }
 
 
 /*    public void updateSyncedSamp(String id) {

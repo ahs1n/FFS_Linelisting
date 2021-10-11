@@ -19,6 +19,7 @@ import java.util.List;
 import edu.aku.hassannaqvi.ffs_linelisting.BuildConfig;
 import edu.aku.hassannaqvi.ffs_linelisting.R;
 import edu.aku.hassannaqvi.ffs_linelisting.models.Form;
+import edu.aku.hassannaqvi.ffs_linelisting.models.Mwra;
 import edu.aku.hassannaqvi.ffs_linelisting.models.Users;
 
 
@@ -43,9 +44,8 @@ public class MainApp extends Application {
 
     public static File sdDir;
     public static String[] downloadData;
-    public static Form sa;
-    public static Form sb;
-    public static Form lc;
+    public static Form form;
+    public static Mwra mwra;
 
     public static String DeviceURL = "devices.php";
     public static AppInfo appInfo;
@@ -75,11 +75,11 @@ public class MainApp extends Application {
     public static int childCountComplete = 0;
     public static int pregCountComplete = 0;
     public static List<String> subjectNames;
-    public static String crAddress;
-    public static String wrAddress;
+
     public static String selectedCluster;
     public static int maxStructure;
     public static int hhid;
+    public static int HHCount = 0;
 
 
     public static void hideSystemUI(View decorView) {

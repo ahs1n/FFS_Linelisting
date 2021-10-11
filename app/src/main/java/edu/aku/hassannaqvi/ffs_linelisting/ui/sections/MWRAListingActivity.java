@@ -1,70 +1,63 @@
 package edu.aku.hassannaqvi.ffs_linelisting.ui.sections;
 
-import static edu.aku.hassannaqvi.ffs_linelisting.core.MainApp.form;
+import static edu.aku.hassannaqvi.ffs_linelisting.core.MainApp.mwra;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
-import com.validatorcrawler.aliazaz.Clear;
 import com.validatorcrawler.aliazaz.Validator;
 
 import org.json.JSONException;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 import edu.aku.hassannaqvi.ffs_linelisting.MainActivity;
 import edu.aku.hassannaqvi.ffs_linelisting.R;
 import edu.aku.hassannaqvi.ffs_linelisting.contracts.TableContracts;
 import edu.aku.hassannaqvi.ffs_linelisting.core.MainApp;
 import edu.aku.hassannaqvi.ffs_linelisting.database.DatabaseHelper;
-import edu.aku.hassannaqvi.ffs_linelisting.databinding.ActivityFamilyListingBinding;
+import edu.aku.hassannaqvi.ffs_linelisting.databinding.ActivityMwraListingBinding;
+import edu.aku.hassannaqvi.ffs_linelisting.models.Mwra;
 
-public class FamilyListingActivity extends AppCompatActivity {
+public class MWRAListingActivity extends AppCompatActivity {
     private static final String TAG = "FamilyListingActivity";
-    ActivityFamilyListingBinding bi;
+    ActivityMwraListingBinding bi;
     String st = "";
     private DatabaseHelper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        bi = DataBindingUtil.setContentView(this, R.layout.activity_family_listing);
+        bi = DataBindingUtil.setContentView(this, R.layout.activity_mwra_listing);
         bi.setCallback(this);
-        st = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH).format(new Date().getTime());
         setupSkips();
         setSupportActionBar(bi.toolbar);
         db = MainApp.appInfo.dbHelper;
 
-        MainApp.hhid++;
-        MainApp.mwraCount = 0;
+        MainApp.mwraCount++;
         bi.hhid.setText(MainApp.form.getHh01() + "\n" + String.format("%03d", MainApp.maxStructure) + "-" + String.format("%02d", MainApp.hhid));
-        Toast.makeText(this, "Staring Household", Toast.LENGTH_SHORT).show();
+        bi.mwraSno.setText("MWRA#: " + MainApp.mwraCount);
 
+        setupSkips();
+        Toast.makeText(this, "Staring MWRA", Toast.LENGTH_SHORT).show();
 
     }
 
     private void setupSkips() {
 
-        bi.hh14.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                if (bi.hh1401.isChecked()) {
-                    bi.addFamily.setText("Add MWRA");
-                } else {
-                    bi.addFamily.setText("Continue to Next");
-                    Clear.clearAllFields(bi.fldGrpCVhh15);
-                }
-            }
-        });
+        //   bi.hh14.setOnCheckedChangeListener((radioGroup, i) -> Clear.clearAllFields(bi.fldGrpa14a));
 
+        if (MainApp.mwraCount < Integer.parseInt(MainApp.form.getHh15())) {
+            bi.addMWRA.setText("Add MWRA");
+        } else if (MainApp.hhid < Integer.parseInt(MainApp.form.getHh10())) {
+            bi.addMWRA.setText("Continue to Next");
+        } else {
+            bi.addMWRA.setText("Continue to Next");
+
+        }
 
     }
 
@@ -72,15 +65,15 @@ public class FamilyListingActivity extends AppCompatActivity {
         long rowId = 0;
 
         try {
-            rowId = db.addForm(form);
+            rowId = db.addMwra(mwra);
 
             if (rowId > 0) {
                 long updCount = 0;
 
-                form.setId(String.valueOf(rowId));
-                form.setUid(form.getDeviceId() + form.getId());
+                mwra.setId(String.valueOf(rowId));
+                mwra.setUid(mwra.getDeviceId() + mwra.getId());
 
-                updCount = db.updateFormColumn(TableContracts.FormTable.COLUMN_UID, form.getUid());
+                updCount = db.updateMwraColumn(TableContracts.MwraTable.COLUMN_UID, mwra.getUid());
 
                 if (updCount > 0) {
                     return true;
@@ -103,17 +96,15 @@ public class FamilyListingActivity extends AppCompatActivity {
         if (!formValidation()) return;
         saveDraft();
         if (insertRecord()) {
-            //  finish();
-            if (bi.hh1401.isChecked()) {
-                Toast.makeText(this, "Staring MWRA", Toast.LENGTH_SHORT).show();
-                // startActivity(new Intent(this, MWRAListingActivity.class));
+            finish();
+            if (MainApp.mwraCount < Integer.parseInt(MainApp.form.getHh15())) {
+                startActivity(new Intent(this, MWRAListingActivity.class));
+                Toast.makeText(this, MainApp.mwraCount, Toast.LENGTH_SHORT).show();
                 //     startActivity(new Intent(this, SectionBActivity.class));
             } else if (MainApp.hhid < Integer.parseInt(MainApp.form.getHh10())) {
-                //   Toast.makeText(this, "Staring Family", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(this, FamilyListingActivity.class));
 
             } else {
-                //     Toast.makeText(this, "Staring Household", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(this, SectionBActivity.class));
 
             }
@@ -121,38 +112,37 @@ public class FamilyListingActivity extends AppCompatActivity {
     }
 
     private void saveDraft() {
-        // form = new Form();
-        form.setSysDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH).format(new Date().getTime()));
-        form.setUserName(MainApp.user.getUserName());
-        form.setDeviceId(MainApp.appInfo.getDeviceID());
-        form.setDeviceTag(MainApp.appInfo.getTagName());
-        form.setAppver(MainApp.appInfo.getAppVersion());
-        form.setStartTime(st);
-        form.setEndTime(new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH).format(new Date().getTime()));
+        mwra = new Mwra();
+        mwra.setSysDate(MainApp.form.getSysDate());
+        mwra.setUserName(MainApp.user.getUserName());
+        mwra.setDeviceId(MainApp.appInfo.getDeviceID());
+        mwra.setDeviceTag(MainApp.appInfo.getTagName());
+        mwra.setAppver(MainApp.appInfo.getAppVersion());
+        mwra.setStartTime(st);
 
-        form.setHh11(bi.hh11.getText().toString());
+/*        mwra.setHh11(bi.hh11.getText().toString());
 
-        form.setHh12(bi.hh12.getText().toString());
+        mwra.setHh12(bi.hh12.getText().toString());
 
-        form.setHh13(bi.hh13.getText().toString());
+        mwra.setHh13(bi.hh13.getText().toString());
 
-        form.setHh14(bi.hh1401.isChecked() ? "1"
+        mwra.setHh14(bi.hh1401.isChecked() ? "1"
                 : bi.hh1402.isChecked() ? "2"
                 : "-1");
 
-        form.setHh15(bi.hh15.getText().toString());
+        mwra.setHh15(bi.hh15.getText().toString());*/
 
-/*        form.setHh16(bi.hh16.getText().toString());
+        mwra.setHh16(bi.hh16.getText().toString());
 
-        form.setHh17(bi.hh17.getText().toString());
+        mwra.setHh17(bi.hh17.getText().toString());
 
-        form.setHh18(bi.hh18.getText().toString());
+        mwra.setHh18(bi.hh18.getText().toString());
 
-        form.setHh19(bi.hh19.getText().toString());*/
-        form.setHh21(String.valueOf(MainApp.hhid));
+        mwra.setHh19(bi.hh19.getText().toString());
+        mwra.setHh21(String.valueOf(MainApp.hhid));
 
         try {
-            form.setsA(form.sAtoString());
+            mwra.setsMwra(mwra.sMwratoString());
         } catch (JSONException e) {
             e.printStackTrace();
             Toast.makeText(this, "JSONException(SB): " + e.getMessage(), Toast.LENGTH_SHORT).show();

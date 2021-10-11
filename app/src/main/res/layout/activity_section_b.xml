@@ -42,16 +42,17 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-
                 <TextView
                     android:id="@+id/hhid"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/grayLight"
+                    android:background="@color/redLight"
+                    android:fontFamily="@font/allerta_stencil"
                     android:gravity="center"
                     android:text="1010-234"
-                    android:textColor="@color/redLight"
-                    android:textSize="56sp" />
+                    android:textColor="@color/white"
+                    android:textSize="56sp"
+                    android:textStyle="bold" />
 
 
             </LinearLayout>
@@ -234,7 +235,7 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/fldGrpCVhh08"
                     style="@style/cardView"
-                    android:visibility='@{hh0701.checked? View.GONE : View.VISIBLE}'>
+                    android:visibility='@{hh0701.checked||hh0718.checked||hh0719.checked? View.GONE : View.VISIBLE}'>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -273,6 +274,7 @@
                 <!-- hh09  Radio   -->
                 <androidx.cardview.widget.CardView
                     android:id="@+id/fldGrpCVhh09"
+                    android:visibility="@{hh0701.checked &amp;&amp; !hh0718.checked &amp;&amp; !hh0719.checked ?View.VISIBLE:View.GONE}"
                     style="@style/cardView">
 
                     <LinearLayout
@@ -306,14 +308,14 @@
                             android:orientation="horizontal">
 
                             <RadioButton
-                                android:id="@+id/hh0801"
+                                android:id="@+id/hh0901"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:text="@string/hh0801" />
 
                             <RadioButton
-                                android:id="@+id/hh0802"
+                                android:id="@+id/hh0902"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
@@ -322,7 +324,48 @@
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
+                <!-- hh10  Input-Numeric   -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/fldGrpCVhh10"
+                    style="@style/cardView"
+                    android:visibility="@{hh0901.checked?View.VISIBLE:View.GONE}">
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bottom"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                style="@style/quesNum"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="@string/Q_hh10" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:text="@string/hh10" />
+                        </LinearLayout>
+
+                        <com.edittextpicker.aliazaz.EditTextPicker
+                            android:id="@+id/hh10"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/hh10"
+                            android:inputType="number"
+                            android:maxLength="3"
+                            app:maxValue="100"
+                            app:minValue="1"
+                            app:type="range" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
 
 
                 <!--EndButton LinearLayout-->
@@ -353,6 +396,8 @@
                         android:text="Continue to next"
                         android:textColor="@color/white" />
                 </LinearLayout>
+
+
             </LinearLayout>
         </ScrollView>
     </LinearLayout>

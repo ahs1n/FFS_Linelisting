@@ -11,6 +11,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import edu.aku.hassannaqvi.ffs_linelisting.BR;
 import edu.aku.hassannaqvi.ffs_linelisting.contracts.TableContracts.FormTable;
 import edu.aku.hassannaqvi.ffs_linelisting.core.MainApp;
@@ -64,6 +68,17 @@ public class Form extends BaseObservable {
     private String sA = StringUtils.EMPTY;
     private String sB = StringUtils.EMPTY;
     private String lC = StringUtils.EMPTY;
+
+
+    public Form() {
+
+        setSysDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH).format(new Date().getTime()));
+        setUserName(MainApp.user.getUserName());
+        setDeviceId(MainApp.deviceid);
+        setAppver(MainApp.appInfo.getAppVersion());
+        setAppver(MainApp.appInfo.getAppVersion());
+
+    }
 
     @Bindable
     public String getHh01() {

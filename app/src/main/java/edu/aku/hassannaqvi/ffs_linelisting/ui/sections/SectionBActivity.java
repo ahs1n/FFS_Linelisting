@@ -1,11 +1,12 @@
 package edu.aku.hassannaqvi.ffs_linelisting.ui.sections;
 
 import static edu.aku.hassannaqvi.ffs_linelisting.core.MainApp.editor;
-import static edu.aku.hassannaqvi.ffs_linelisting.core.MainApp.sa;
+import static edu.aku.hassannaqvi.ffs_linelisting.core.MainApp.form;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -44,12 +45,35 @@ public class SectionBActivity extends AppCompatActivity {
         db = MainApp.appInfo.dbHelper;
 
         MainApp.maxStructure++;
-        bi.hhid.setText(String.valueOf(MainApp.maxStructure));
+        MainApp.hhid = 0;
+        bi.hhid.setText(MainApp.form.getHh01() + "\n" + String.format("%03d", MainApp.maxStructure));
+        Toast.makeText(this, "Staring Structure", Toast.LENGTH_SHORT).show();
+
     }
 
     private void setupSkips() {
 
-        bi.hh07.setOnCheckedChangeListener((radioGroup, i) -> Clear.clearAllFields(bi.fldGrpCVhh08));
+        bi.hh07.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                if (bi.hh0701.isChecked()) {
+                    Clear.clearAllFields(bi.fldGrpCVhh08);
+                } else {
+                    Clear.clearAllFields(bi.fldGrpCVhh09);
+                    Clear.clearAllFields(bi.fldGrpCVhh10);
+
+                }
+
+                if (bi.hh0718.isChecked() || bi.hh0719.isChecked()) {
+                    Clear.clearAllFields(bi.fldGrpCVhh08);
+                    Clear.clearAllFields(bi.fldGrpCVhh09);
+                    Clear.clearAllFields(bi.fldGrpCVhh10);
+                    bi.btnContinue.setText("Close Listing");
+                }
+
+            }
+        });
+        bi.hh0902.setOnCheckedChangeListener((radioGroup, i) -> Clear.clearAllFields(bi.fldGrpCVhh10));
 
         //   bi.hh09.setOnCheckedChangeListener((radioGroup, i) -> Clear.clearAllFields(bi.fldGrpCVhh10));
     }
@@ -59,15 +83,15 @@ public class SectionBActivity extends AppCompatActivity {
         long rowId = 0;
 
         try {
-            rowId = db.addCR(sa);
+            rowId = db.addForm(form);
 
             if (rowId > 0) {
                 long updCount = 0;
 
-                sa.setId(String.valueOf(rowId));
-                sa.setUid(sa.getDeviceId() + sa.getId());
+                form.setId(String.valueOf(rowId));
+                form.setUid(form.getDeviceId() + form.getId());
 
-                updCount = db.updateCrColumn(TableContracts.FormTable.COLUMN_UID, sa.getUid());
+                updCount = db.updateFormColumn(TableContracts.FormTable.COLUMN_UID, form.getUid());
 
                 if (updCount > 0) {
 
@@ -96,9 +120,12 @@ public class SectionBActivity extends AppCompatActivity {
         if (insertRecord()) {
             finish();
             Intent i = null;
-            if (sa.getHh07().equals("1")) {
+            if (form.getHh07().equals("1")) {
                 i = new Intent(this, FamilyListingActivity.class);
                 MainApp.hhid = 0;
+            } else if (bi.hh0718.isChecked() || bi.hh0719.isChecked()) {
+
+                i = new Intent(this, MainActivity.class);
             } else {
                 i = new Intent(this, SectionBActivity.class);
             }
@@ -109,16 +136,19 @@ public class SectionBActivity extends AppCompatActivity {
 
 
     private void saveDraft() {
-        // sa = new Form();
-        sa.setSysDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH).format(new Date().getTime()));
-        sa.setUserName(MainApp.user.getUserName());
-        sa.setDeviceId(MainApp.appInfo.getDeviceID());
-        sa.setDeviceTag(MainApp.appInfo.getTagName());
-        sa.setAppver(MainApp.appInfo.getAppVersion());
-        sa.setStartTime(st);
-        sa.setEndTime(new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH).format(new Date().getTime()));
+        // form = new Form();
+        if (bi.hh0718.isChecked() || bi.hh0719.isChecked()) {
+            MainApp.maxStructure--;
+        }
+        form.setSysDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH).format(new Date().getTime()));
+        form.setUserName(MainApp.user.getUserName());
+        form.setDeviceId(MainApp.appInfo.getDeviceID());
+        form.setDeviceTag(MainApp.appInfo.getTagName());
+        form.setAppver(MainApp.appInfo.getAppVersion());
+        form.setStartTime(st);
+        form.setEndTime(new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH).format(new Date().getTime()));
 
-        sa.setHh07(bi.hh0701.isChecked() ? "1"
+        form.setHh07(bi.hh0701.isChecked() ? "1"
                 : bi.hh0702.isChecked() ? "2"
                 : bi.hh0703.isChecked() ? "3"
                 : bi.hh0704.isChecked() ? "4"
@@ -139,17 +169,16 @@ public class SectionBActivity extends AppCompatActivity {
                 : bi.hh0719.isChecked() ? "19"
                 : "-1");
 
-        sa.setHh0717x(bi.hh0717x.getText().toString());
-        sa.setHh08(bi.hh08.getText().toString());
+        form.setHh0717x(bi.hh0717x.getText().toString());
+        form.setHh08(bi.hh08.getText().toString());
 
-        sa.setHh09(bi.hh0801.isChecked() ? "1"
-                : bi.hh0802.isChecked() ? "2"
+        form.setHh09(bi.hh0901.isChecked() ? "1"
+                : bi.hh0902.isChecked() ? "2"
                 : "-1");
-
-        // sa.setHh10(bi.hh10.getText().toString());
+        form.setHh10(bi.hh0701.isChecked() && bi.hh0902.isChecked() ? "1" : bi.hh10.getText().toString());
 
         try {
-            sa.setsA(sa.sAtoString());
+            form.setsA(form.sAtoString());
         } catch (JSONException e) {
             e.printStackTrace();
             Toast.makeText(this, "JSONException(SB): " + e.getMessage(), Toast.LENGTH_SHORT).show();

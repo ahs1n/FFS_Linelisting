@@ -63,6 +63,11 @@
             android:theme="@style/AppThemeUrdu"
             android:windowSoftInputMode="adjustResize" />
         <activity
+            android:name=".ui.sections.MWRAListingActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeUrdu"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
             android:name=".ui.SyncActivity"
             android:exported="true"
             android:parentActivityName=".MainActivity"

@@ -1,6 +1,6 @@
 package edu.aku.hassannaqvi.ffs_linelisting.ui;
 
-import static edu.aku.hassannaqvi.ffs_linelisting.core.MainApp.sa;
+import static edu.aku.hassannaqvi.ffs_linelisting.core.MainApp.form;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -31,7 +31,7 @@ public class EndingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         bi = DataBindingUtil.setContentView(this, R.layout.activity_ending);
-        bi.setForm(sa);
+        bi.setForm(form);
         setSupportActionBar(bi.toolbar);
         setSupportActionBar(bi.toolbar);
         //setTitle(R.string.section1_mainheading);
@@ -41,15 +41,15 @@ public class EndingActivity extends AppCompatActivity {
         //sectionMainCheck = getIntent().getIntExtra("status", 0);
 
 
-        bi.istatusa.setEnabled(check && !sa.getiStatus().equals("9")); // form is complete and  patient not on hold
+        bi.istatusa.setEnabled(check && !form.getiStatus().equals("9")); // form is complete and  patient not on hold
         bi.istatusb.setEnabled(!check);
-        bi.istatusc.setEnabled(check && sa.getiStatus().equals("9")); // form is complete and  patient not on hold
+        bi.istatusc.setEnabled(check && form.getiStatus().equals("9")); // form is complete and  patient not on hold
 
 
     }
 
     private void saveDraft() {
-        sa.setiStatus(bi.istatusa.isChecked() ? "1"
+        form.setiStatus(bi.istatusa.isChecked() ? "1"
                 : bi.istatusb.isChecked() ? "2"
                 : bi.istatusc.isChecked() ? "9"
                 : "-1");
@@ -75,12 +75,12 @@ public class EndingActivity extends AppCompatActivity {
 
 
     private void cleanupProcess() {
-        sa = null;
+        form = null;
     }
 
 
     private boolean UpdateDB() {
-        int updcount = db.updateCrColumn(TableContracts.FormTable.COLUMN_ISTATUS, sa.getiStatus());
+        int updcount = db.updateFormColumn(TableContracts.FormTable.COLUMN_ISTATUS, form.getiStatus());
         return updcount > 0;
     }
 

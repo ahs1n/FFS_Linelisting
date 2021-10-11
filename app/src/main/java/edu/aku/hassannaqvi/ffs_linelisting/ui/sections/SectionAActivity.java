@@ -1,6 +1,6 @@
 package edu.aku.hassannaqvi.ffs_linelisting.ui.sections;
 
-import static edu.aku.hassannaqvi.ffs_linelisting.core.MainApp.sa;
+import static edu.aku.hassannaqvi.ffs_linelisting.core.MainApp.form;
 import static edu.aku.hassannaqvi.ffs_linelisting.core.MainApp.sharedPref;
 
 import android.content.Intent;
@@ -106,15 +106,15 @@ public class SectionAActivity extends AppCompatActivity {
        /* long rowId = 0;
 
         try {
-            rowId = db.addCR(sa);
+            rowId = db.addCR(form);
 
             if (rowId > 0) {
                 long updCount = 0;
 
-                sa.setId(String.valueOf(rowId));
-                sa.setUid(sa.getDeviceId() + sa.getId());
+                form.setId(String.valueOf(rowId));
+                form.setUid(form.getDeviceId() + form.getId());
 
-                updCount = db.updateCrColumn(TableContracts.FormTable.COLUMN_UID, sa.getUid());
+                updCount = db.updateCrColumn(TableContracts.FormTable.COLUMN_UID, form.getUid());
 
                 if (updCount > 0) {
                     return true;
@@ -144,31 +144,31 @@ public class SectionAActivity extends AppCompatActivity {
 
 
     private void saveDraft() {
-        sa = new Form();
-        sa.setSysDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH).format(new Date().getTime()));
-        sa.setUserName(MainApp.user.getUserName());
-        sa.setDeviceId(MainApp.appInfo.getDeviceID());
-        sa.setDeviceTag(MainApp.appInfo.getTagName());
-        sa.setAppver(MainApp.appInfo.getAppVersion());
-        sa.setStartTime(st);
-        sa.setEndTime(new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH).format(new Date().getTime()));
+        form = new Form();
+        form.setSysDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH).format(new Date().getTime()));
+        form.setUserName(MainApp.user.getUserName());
+        form.setDeviceId(MainApp.appInfo.getDeviceID());
+        form.setDeviceTag(MainApp.appInfo.getTagName());
+        form.setAppver(MainApp.appInfo.getAppVersion());
+        form.setStartTime(st);
+        form.setEndTime(new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH).format(new Date().getTime()));
 
 
-        sa.setHh01(bi.hh01.getText().toString());
+        form.setHh01(bi.hh01.getText().toString());
 
-/*        sa.setHh02(bi.hh02.getText().toString());
+/*        form.setHh02(bi.hh02.getText().toString());
 
-        sa.setHh03(bi.hh03.getText().toString());*/
+        form.setHh03(bi.hh03.getText().toString());*/
 
-        sa.setHh04(bi.hh04.getText().toString());
+        form.setHh04(bi.hh04.getText().toString());
 
-        sa.setHh05(bi.hh05.getText().toString());
+        form.setHh05(bi.hh05.getText().toString());
 
-        sa.setHh06(bi.hh06.getText().toString());
-        sa.setHh20(String.valueOf(MainApp.maxStructure));
+        form.setHh06(bi.hh06.getText().toString());
+        form.setHh20(String.valueOf(MainApp.maxStructure));
 
         try {
-            sa.setsA(sa.sAtoString());
+            form.setsA(form.sAtoString());
         } catch (JSONException e) {
             e.printStackTrace();
             Toast.makeText(this, "JSONException(SA): " + e.getMessage(), Toast.LENGTH_SHORT).show();
