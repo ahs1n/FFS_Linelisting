@@ -5,9 +5,9 @@ import static edu.aku.hassannaqvi.ffs_linelisting.core.MainApp.sharedPref;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,7 +19,6 @@ import org.json.JSONException;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.Locale;
 
@@ -51,14 +50,44 @@ public class SectionAActivity extends AppCompatActivity {
         setSupportActionBar(bi.toolbar);
         db = MainApp.appInfo.dbHelper;
 
-        populateSpinner();
+        //populateSpinner();
+
+        bi.hh01.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (charSequence.length() == 9) {
+                    bi.searchEB.setBackgroundColor(getResources().getColor(R.color.greenLight));
+                    bi.searchEB.setEnabled(true);
+                } else {
+                    bi.searchEB.setBackgroundColor(getResources().getColor(android.R.color.darker_gray));
+                    bi.searchEB.setEnabled(false);
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                bi.hh04.setText(null);
+                bi.hh05.setText(null);
+                bi.hh04.setError(null);
+                bi.hh05.setError(null);
+                bi.hh06.setText(null);
+                bi.ebMsg.setText(null);
+
+            }
+        });
     }
 
 
     private void setupSkips() {
     }
 
-    private void populateSpinner() {
+   /* private void populateSpinner() {
         Collection<EnumBlocks> enumBlocks = db.getEnumBlocks();
         ebCode = new ArrayList<>();
         districtNames = new ArrayList<>();
@@ -95,7 +124,7 @@ public class SectionAActivity extends AppCompatActivity {
         });
 
 
-    }
+    }*/
 
     private boolean insertRecord() {
         MainApp.selectedCluster = bi.hh01.getText().toString();
@@ -192,5 +221,52 @@ public class SectionAActivity extends AppCompatActivity {
         // Toast.makeText(getApplicationContext(), "Back Press Not Allowed", Toast.LENGTH_LONG).show();
         finish();
         startActivity(new Intent(this, MainActivity.class));
+    }
+
+    public void searchEB(View view) {
+        bi.openForm.setEnabled(false);
+        EnumBlocks testEb = new EnumBlocks();
+        testEb.setEnumBlock("909090909");
+        testEb.setDistrictName("Test District 9");
+        testEb.setTehsilName("Test Tehsil 9");
+        EnumBlocks enumBlock = new EnumBlocks();
+        if (!bi.hh01.getText().toString().equals(testEb.getEnumBlock())) {
+            enumBlock = db.getEnumBlocks(bi.hh01.getText().toString());
+            MainApp.selectedCluster = bi.hh01.getText().toString();
+            MainApp.maxStructure = Integer.parseInt(sharedPref.getString(MainApp.selectedCluster, "0"));
+            bi.ebMsg.setText("Existing structures: " + MainApp.maxStructure);
+        } else {
+            enumBlock = testEb;
+            MainApp.selectedCluster = null;
+            MainApp.maxStructure = 0;
+            bi.ebMsg.setText(null);
+
+        }
+
+       /* ebCode = new ArrayList<>();
+        districtNames = new ArrayList<>();
+        tehsilNames = new ArrayList<>();
+        for (EnumBlocks eb : enumBlocks) {
+            ebCode.add(eb.getEnumBlock());
+            districtNames.add(eb.getDistrictName());
+            tehsilNames.add(eb.getTehsilName()); //
+        }*/
+        if (!enumBlock.getEnumBlock().equals("")) {
+            bi.hh04.setError(null);
+            bi.hh05.setError(null);
+            bi.hh04.setText(enumBlock.getDistrictName());
+            bi.hh05.setText(enumBlock.getTehsilName());
+            bi.openForm.setEnabled(true);
+
+            //     bi.fldGrpHH.setVisibility(View.VISIBLE);
+
+        } else {
+            bi.hh04.setError("Not Found!");
+            bi.hh05.setError("Not Found!");
+            bi.hh06.setText(null);
+            bi.openForm.setEnabled(false);
+
+//            bi.fldGrpHH.setVisibility(View.GONE);
+        }
     }
 }

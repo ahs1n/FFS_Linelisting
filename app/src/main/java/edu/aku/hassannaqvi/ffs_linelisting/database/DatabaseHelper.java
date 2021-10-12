@@ -22,7 +22,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 
 import edu.aku.hassannaqvi.ffs_linelisting.contracts.TableContracts.EnumBlocksTable;
@@ -708,37 +707,34 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public Collection<EnumBlocks> getEnumBlocks() {
+
+    public EnumBlocks getEnumBlocks(String ebCode) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = null;
         String[] columns = null;
 
-        String whereClause = null;
+        String whereClause = EnumBlocksTable.COLUMN_ENUM_BLOCK_CODE + " = ?";
 
-        String[] whereArgs = null;
+        String[] whereArgs = {ebCode};
 
         String groupBy = null;
         String having = null;
 
         String orderBy = EnumBlocksTable.COLUMN_ENUM_BLOCK_CODE + " ASC";
-        String limit = "2000";
 
-        Collection<EnumBlocks> enumBlocks = new ArrayList<>();
+        EnumBlocks e = new EnumBlocks();
         try {
             c = db.query(
-                    true,
                     EnumBlocksTable.TABLE_NAME,  // The table to query
                     columns,                   // The columns to return
                     whereClause,               // The columns for the WHERE clause
                     whereArgs,                 // The values for the WHERE clause
                     groupBy,                   // don't group the rows
                     having,                    // don't filter by row groups
-                    orderBy,
-                    limit //The sort order
+                    orderBy
             );
             while (c.moveToNext()) {
-                EnumBlocks e = new EnumBlocks();
-                enumBlocks.add(e.hydrate(c));
+                e = new EnumBlocks().hydrate(c);
             }
         } finally {
             if (c != null) {
@@ -748,7 +744,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 db.close();
             }
         }
-        return enumBlocks;
+        return e;
 
     }
+
 }

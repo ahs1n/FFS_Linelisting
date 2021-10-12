@@ -10,8 +10,8 @@ import org.json.JSONObject
  */
 class EnumBlocks {
     var ID: Long = 0
-    var districtName: String = StringUtils.EMPTY
-    var tehsilName: String = StringUtils.EMPTY
+    var districtName: String = "Not Found"
+    var tehsilName: String = "Not Found"
     var enumBlock: String = StringUtils.EMPTY
 
     constructor() {
