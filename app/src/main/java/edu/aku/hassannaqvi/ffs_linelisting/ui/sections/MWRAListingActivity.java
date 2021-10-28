@@ -39,7 +39,7 @@ public class MWRAListingActivity extends AppCompatActivity {
 
         MainApp.mwraCount++;
         bi.hhid.setText(MainApp.form.getHh01() + "\n" + String.format("%03d", MainApp.maxStructure) + "-" + String.format("%02d", MainApp.hhid));
-        bi.mwraSno.setText("MWRA#: " + MainApp.mwraCount);
+        bi.mwraSno.setText("MWRA#: " + MainApp.mwraCount +" of "+ MainApp.form.getHh15());
 
         setupSkips();
         Toast.makeText(this, "Staring MWRA", Toast.LENGTH_SHORT).show();
@@ -49,16 +49,16 @@ public class MWRAListingActivity extends AppCompatActivity {
     private void setupSkips() {
 
         //   bi.hh14.setOnCheckedChangeListener((radioGroup, i) -> Clear.clearAllFields(bi.fldGrpa14a));
+if(MainApp.form.getHh15()!=null) {
+    if (MainApp.mwraCount < Integer.parseInt(MainApp.form.getHh15())) {
+        bi.addMWRA.setText("Add MWRA");
+    } else if (MainApp.hhid < Integer.parseInt(MainApp.form.getHh10())) {
+        bi.addMWRA.setText("Continue to Next");
+    } else {
+        bi.addMWRA.setText("Continue to Next");
 
-        if (MainApp.mwraCount < Integer.parseInt(MainApp.form.getHh15())) {
-            bi.addMWRA.setText("Add MWRA");
-        } else if (MainApp.hhid < Integer.parseInt(MainApp.form.getHh10())) {
-            bi.addMWRA.setText("Continue to Next");
-        } else {
-            bi.addMWRA.setText("Continue to Next");
-
-        }
-
+    }
+}
     }
 
     private boolean insertRecord() {
@@ -99,7 +99,7 @@ public class MWRAListingActivity extends AppCompatActivity {
             finish();
             if (MainApp.mwraCount < Integer.parseInt(MainApp.form.getHh15())) {
                 startActivity(new Intent(this, MWRAListingActivity.class));
-                Toast.makeText(this, MainApp.mwraCount, Toast.LENGTH_SHORT).show();
+              Toast.makeText(this, ""+MainApp.mwraCount, Toast.LENGTH_SHORT).show();
                 //     startActivity(new Intent(this, SectionBActivity.class));
             } else if (MainApp.hhid < Integer.parseInt(MainApp.form.getHh10())) {
                 startActivity(new Intent(this, FamilyListingActivity.class));
@@ -119,6 +119,7 @@ public class MWRAListingActivity extends AppCompatActivity {
         mwra.setDeviceTag(MainApp.appInfo.getTagName());
         mwra.setAppver(MainApp.appInfo.getAppVersion());
         mwra.setStartTime(st);
+        mwra.setIdentification();
 
 /*        mwra.setHh11(bi.hh11.getText().toString());
 

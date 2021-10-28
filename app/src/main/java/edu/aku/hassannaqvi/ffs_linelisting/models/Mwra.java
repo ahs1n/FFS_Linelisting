@@ -19,7 +19,7 @@ public class Mwra extends BaseObservable {
 
     private final String TAG = "MWRA";
     private final transient PropertyChangeRegistry propertyChangeRegistry = new PropertyChangeRegistry();
-    private final String uuid = StringUtils.EMPTY;
+    private String uuid = StringUtils.EMPTY;
     // APP VARIABLES
     private String projectName = MainApp.PROJECT_NAME;
     // APP VARIABLES
@@ -52,21 +52,31 @@ public class Mwra extends BaseObservable {
     private String hh17 = StringUtils.EMPTY;
     private String hh18 = StringUtils.EMPTY;
     private String hh19 = StringUtils.EMPTY;
-    private String hh20 = StringUtils.EMPTY;
+  private String hh20 = StringUtils.EMPTY;
     private String hh21 = StringUtils.EMPTY;
     private String sMwra = StringUtils.EMPTY;
 
 
     public Mwra() {
 
-        setSysDate(MainApp.form.getSysDate());
-        setSysDate(MainApp.form.getSysDate());
+//        setSysDate(MainApp.form.getSysDate());
+//        setSysDate(MainApp.form.getSysDate());
         setUserName(MainApp.user.getUserName());
         setDeviceId(MainApp.deviceid);
         setAppver(MainApp.appInfo.getAppVersion());
         setAppver(MainApp.appInfo.getAppVersion());
         setAppver(MainApp.appInfo.getAppVersion());
 
+    }
+
+    public void setIdentification() {
+        this.uuid = MainApp.form.getUid();
+        this.hh01 = MainApp.form.getHh01();
+        this.hh02 = MainApp.form.getHh02();
+        this.hh03 = MainApp.form.getHh03();
+        this.hh04 = MainApp.form.getHh04();
+        this.hh05 = MainApp.form.getHh05();
+        this.hh06 = MainApp.form.getHh06();
     }
 
     @Bindable
@@ -269,6 +279,7 @@ public class Mwra extends BaseObservable {
         notifyPropertyChanged(BR.hh19);
     }
 
+
     @Bindable
     public String getHh20() {
         return hh20;
@@ -278,7 +289,6 @@ public class Mwra extends BaseObservable {
         this.hh20 = hh20;
         notifyPropertyChanged(BR.hh20);
     }
-
     @Bindable
     public String getHh21() {
         return hh21;
@@ -288,6 +298,7 @@ public class Mwra extends BaseObservable {
         this.hh21 = hh21;
         notifyPropertyChanged(BR.hh21);
     }
+
 
 
     public String getProjectName() {
@@ -312,6 +323,13 @@ public class Mwra extends BaseObservable {
 
     public void setUid(String uid) {
         this.uid = uid;
+    }
+ public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
     public String getUserName() {
@@ -423,6 +441,7 @@ public class Mwra extends BaseObservable {
     public Mwra Hydrate(Cursor cursor) throws JSONException {
         this.id = cursor.getString(cursor.getColumnIndexOrThrow(MwraTable.COLUMN_ID));
         this.uid = cursor.getString(cursor.getColumnIndexOrThrow(MwraTable.COLUMN_UID));
+        this.uuid = cursor.getString(cursor.getColumnIndexOrThrow(MwraTable.COLUMN_UUID));
         this.userName = cursor.getString(cursor.getColumnIndexOrThrow(MwraTable.COLUMN_USERNAME));
         this.sysDate = cursor.getString(cursor.getColumnIndexOrThrow(MwraTable.COLUMN_SYSDATE));
         this.deviceId = cursor.getString(cursor.getColumnIndexOrThrow(MwraTable.COLUMN_DEVICEID));
@@ -455,7 +474,7 @@ public class Mwra extends BaseObservable {
             this.hh17 = json.getString("hh17");
             this.hh18 = json.getString("hh18");
             this.hh19 = json.getString("hh19");
-            this.hh20 = json.getString("hh20");
+       this.hh20 = json.getString("hh20");
             this.hh21 = json.getString("hh21");
 
 
@@ -478,7 +497,7 @@ public class Mwra extends BaseObservable {
                 .put("hh18", hh18)
                 .put("hh19", hh19)
                 .put("hh21", hh21)
-                .put("hh22", hh20);
+               .put("hh20", hh20);
         return json.toString();
     }
 

@@ -28,14 +28,14 @@ public class MainApp extends Application {
     public static final String PROJECT_NAME = "ffs_linelisting";
     public static final String DIST_ID = null;
     public static final String SYNC_LOGIN = "sync_login";
-    //    public static final String _IP = "https://vcoe1.aku.edu";// .LIVE server
-    public static final String _IP = "http://f38158/prosystem";// .TEST server
+    public static final String _IP = "https://vcoe1.aku.edu";// .LIVE server
+    // public static final String _IP = "http://f49461:8080/prosystem";// .TEST server
     //public static final String _IP = "http://43.245.131.159:8080";// .TEST server
-    public static final String _HOST_URL = MainApp._IP + "/food_survey/api/";// .TEST server;
+    public static final String _HOST_URL = MainApp._IP + "/biofort/api/";// .TEST server;
     public static final String _SERVER_URL = "sync.php";
     public static final String _SERVER_GET_URL = "getData.php";
     public static final String _PHOTO_UPLOAD_URL = _HOST_URL + "uploads.php";
-    public static final String _UPDATE_URL = MainApp._IP + "/food_survey/app/";
+    public static final String _UPDATE_URL = MainApp._IP + "/biofort/app/";
 
     //COUNTRIES
     public static int PAKISTAN = 1;

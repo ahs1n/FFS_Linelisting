@@ -23,6 +23,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import edu.aku.hassannaqvi.ffs_linelisting.contracts.TableContracts.EnumBlocksTable;
 import edu.aku.hassannaqvi.ffs_linelisting.contracts.TableContracts.FormTable;
@@ -92,6 +93,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         // Put all JSON as xxtoString()
         values.put(FormTable.COLUMN_SA, cr.sAtoString());
+        values.put(FormTable.COLUMN_SB, cr.sBtoString());
 
         // Insert the new row, returning the primary key value of the new row
         long newRowId;
@@ -524,7 +526,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         String orderBy = FormTable.COLUMN_ID + " ASC";
 
-        JSONArray allCR = new JSONArray();
+        JSONArray allForm = new JSONArray();
         try {
             c = db.query(
                     FormTable.TABLE_NAME,  // The table to query
@@ -539,9 +541,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 /** WorkManager Upload
                  /*Form fc = new Form();
                  allFC.add(fc.Hydrate(c));*/
-                Log.d(TAG, "getUnsyncedFormCR: " + c.getCount());
-                Form cr = new Form();
-                allCR.put(cr.Hydrate(c).toJSONObject());
+                Log.d(TAG, "getUnsyncedForm: " + c.getCount());
+                Form form = new Form();
+                allForm.put(form.Hydrate(c).toJSONObject());
             }
         } finally {
             if (c != null) {
@@ -551,9 +553,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 db.close();
             }
         }
-        Log.d(TAG, "getUnsyncedFormCR: " + allCR.toString().length());
-        Log.d(TAG, "getUnsyncedFormCR: " + allCR);
-        return allCR;
+        Log.d(TAG, "getUnsyncedForm: " + allForm.toString().length());
+        Log.d(TAG, "getUnsyncedForm: " + allForm);
+        return allForm;
     }
 
     //get UnSyncedTables
@@ -572,7 +574,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         String orderBy = MwraTable.COLUMN_ID + " ASC";
 
-        JSONArray allCR = new JSONArray();
+        JSONArray allMwra = new JSONArray();
         try {
             c = db.query(
                     MwraTable.TABLE_NAME,  // The table to query
@@ -588,8 +590,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                  /*Mwra fc = new Mwra();
                  allFC.add(fc.Hydrate(c));*/
                 Log.d(TAG, "getUnsyncedMwraCR: " + c.getCount());
-                Mwra cr = new Mwra();
-                allCR.put(cr.Hydrate(c).toJSONObject());
+                Mwra mwra = new Mwra();
+                allMwra.put(mwra.Hydrate(c).toJSONObject());
             }
         } finally {
             if (c != null) {
@@ -599,9 +601,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 db.close();
             }
         }
-        Log.d(TAG, "getUnsyncedMwraCR: " + allCR.toString().length());
-        Log.d(TAG, "getUnsyncedMwraCR: " + allCR);
-        return allCR;
+        Log.d(TAG, "getUnsyncedMwraCR: " + allMwra.toString().length());
+        Log.d(TAG, "getUnsyncedMwraCR: " + allMwra);
+        return allMwra;
     }
 
 
@@ -626,7 +628,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     //update SyncedTables
-    public void updateSyncedMwra(String id) {
+    public void updateSyncedmwra(String id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
 // New value for one column
@@ -748,4 +750,44 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+    public List<EnumBlocks> getEnumBlocks() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = null;
+        String[] columns = null;
+
+        String whereClause = null;
+
+        String[] whereArgs = null;
+
+        String groupBy = null;
+        String having = null;
+
+        String orderBy = EnumBlocksTable.COLUMN_ENUM_BLOCK_CODE + " ASC";
+
+        List<EnumBlocks> e = new ArrayList<>();
+        try {
+            c = db.query(
+                    EnumBlocksTable.TABLE_NAME,  // The table to query
+                    columns,                   // The columns to return
+                    whereClause,               // The columns for the WHERE clause
+                    whereArgs,                 // The values for the WHERE clause
+                    groupBy,                   // don't group the rows
+                    having,                    // don't filter by row groups
+                    orderBy
+            );
+            while (c.moveToNext()) {
+                e.add(new EnumBlocks().hydrate(c));
+
+            }
+        } finally {
+            if (c != null) {
+                c.close();
+            }
+            if (db != null) {
+                db.close();
+            }
+        }
+        return e;
+
+    }
 }

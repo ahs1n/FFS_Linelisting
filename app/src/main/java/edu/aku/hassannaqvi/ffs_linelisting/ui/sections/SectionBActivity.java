@@ -177,6 +177,8 @@ public class SectionBActivity extends AppCompatActivity {
                 : "-1");
         form.setHh10(bi.hh0701.isChecked() && bi.hh0902.isChecked() ? "1" : bi.hh10.getText().toString());
 
+        form.setHh20(String.valueOf(MainApp.maxStructure));
+
         try {
             form.setsA(form.sAtoString());
         } catch (JSONException e) {

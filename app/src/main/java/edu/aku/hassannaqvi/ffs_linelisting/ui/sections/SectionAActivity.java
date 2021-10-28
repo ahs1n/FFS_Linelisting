@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,7 +21,9 @@ import org.json.JSONException;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import edu.aku.hassannaqvi.ffs_linelisting.MainActivity;
@@ -50,7 +54,7 @@ public class SectionAActivity extends AppCompatActivity {
         setSupportActionBar(bi.toolbar);
         db = MainApp.appInfo.dbHelper;
 
-        //populateSpinner();
+        populateSpinner();
 
         bi.hh01.addTextChangedListener(new TextWatcher() {
             @Override
@@ -87,12 +91,12 @@ public class SectionAActivity extends AppCompatActivity {
     private void setupSkips() {
     }
 
-   /* private void populateSpinner() {
-        Collection<EnumBlocks> enumBlocks = db.getEnumBlocks();
+private void populateSpinner() {
+    List<EnumBlocks> enumBlocksList = db.getEnumBlocks();
         ebCode = new ArrayList<>();
         districtNames = new ArrayList<>();
         tehsilNames = new ArrayList<>();
-        for (EnumBlocks eb : enumBlocks) {
+        for (EnumBlocks eb : enumBlocksList) {
             ebCode.add(eb.getEnumBlock());
 
             districtNames.add(eb.getDistrictName());
@@ -103,7 +107,7 @@ public class SectionAActivity extends AppCompatActivity {
                 android.R.layout.simple_dropdown_item_1line, ebCode);
 
         bi.hh01.setAdapter(adapter);
-
+/*
         bi.hh01.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
@@ -121,11 +125,10 @@ public class SectionAActivity extends AppCompatActivity {
                 bi.hh01.setAdapter(adapter);
 
             }
-        });
+        });*/
 
 
-    }*/
-
+    }
     private boolean insertRecord() {
         MainApp.selectedCluster = bi.hh01.getText().toString();
         MainApp.maxStructure = Integer.parseInt(sharedPref.getString(MainApp.selectedCluster, "0"));
@@ -194,7 +197,6 @@ public class SectionAActivity extends AppCompatActivity {
         form.setHh05(bi.hh05.getText().toString());
 
         form.setHh06(bi.hh06.getText().toString());
-        form.setHh20(String.valueOf(MainApp.maxStructure));
 
         try {
             form.setsA(form.sAtoString());

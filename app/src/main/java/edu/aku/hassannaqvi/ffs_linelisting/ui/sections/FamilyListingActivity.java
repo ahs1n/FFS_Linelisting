@@ -4,6 +4,7 @@ import static edu.aku.hassannaqvi.ffs_linelisting.core.MainApp.form;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -68,11 +69,27 @@ public class FamilyListingActivity extends AppCompatActivity {
 
     }
 
-    private boolean insertRecord() {
+    private boolean updateDB() {
+        long updcount = 0;
+        try {
+            updcount = db.updateFormColumn(TableContracts.FormTable.COLUMN_LC, form.lCtoString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Log.d(TAG, R.string.upd_db_form + e.getMessage());
+            Toast.makeText(this, R.string.upd_db_form + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+        if (updcount > 0) return true;
+        else {
+            Toast.makeText(this, R.string.upd_db_error, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+    }
+
+/*    private boolean insertRecord() {
         long rowId = 0;
 
         try {
-            rowId = db.addForm(form);
+          //  rowId = db.addForm(form);
 
             if (rowId > 0) {
                 long updCount = 0;
@@ -96,17 +113,17 @@ public class FamilyListingActivity extends AppCompatActivity {
         }
 
         return false;
-    }
+    }*/
 
 
     public void btnContinue(View view) {
         if (!formValidation()) return;
         saveDraft();
-        if (insertRecord()) {
-            //  finish();
+        if (updateDB()) {
+           finish();
             if (bi.hh1401.isChecked()) {
                 Toast.makeText(this, "Staring MWRA", Toast.LENGTH_SHORT).show();
-                // startActivity(new Intent(this, MWRAListingActivity.class));
+                startActivity(new Intent(this, MWRAListingActivity.class));
                 //     startActivity(new Intent(this, SectionBActivity.class));
             } else if (MainApp.hhid < Integer.parseInt(MainApp.form.getHh10())) {
                 //   Toast.makeText(this, "Staring Family", Toast.LENGTH_SHORT).show();
@@ -162,8 +179,21 @@ public class FamilyListingActivity extends AppCompatActivity {
 
 
     public void btnEnd(View view) {
-        finish();
-        startActivity(new Intent(this, MainActivity.class));
+        bi.hh11.setText("Deleted");
+        bi.hh12.setText("Deleted");
+        bi.hh13.setText("Deleted");
+        bi.hh14.clearCheck();
+        bi.hh15.setText("00");
+
+
+        saveDraft();
+        if (updateDB()) {
+             finish();
+
+                //     Toast.makeText(this, "Staring Household", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, SectionBActivity.class));
+
+        } else Toast.makeText(this, "Failed to Update Database!", Toast.LENGTH_SHORT).show();
     }
 
 

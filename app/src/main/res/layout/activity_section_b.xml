@@ -362,7 +362,7 @@
                             android:inputType="number"
                             android:maxLength="3"
                             app:maxValue="100"
-                            app:minValue="1"
+                            app:minValue="2"
                             app:type="range" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -384,6 +384,7 @@
                         android:background="@color/redOverlay"
                         android:onClick="btnEnd"
                         android:text="Cancel"
+                        android:visibility="gone"
                         android:textColor="@color/white" />
 
                     <Button

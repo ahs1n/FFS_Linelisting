@@ -70,11 +70,10 @@ public class TableContracts {
 
     public static abstract class EnumBlocksTable implements BaseColumns {
         public static final String COLUMN_NAME_NULLABLE = "NULLHACK";
-        public static final String TABLE_NAME = "enumblocks";
+        public static final String TABLE_NAME = "enumBlocks";
         public static final String COLUMN_ID = "_id";
         public static final String COLUMN_DISTRICT_NAME = "district_name";
         public static final String COLUMN_TEHSIL_NAME = "tehsil_name";
         public static final String COLUMN_ENUM_BLOCK_CODE = "eb_code";
-
     }
 }

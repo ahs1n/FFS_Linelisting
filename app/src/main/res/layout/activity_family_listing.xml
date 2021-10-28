@@ -288,7 +288,6 @@
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
-
                 <!--EndButton LinearLayout-->
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -304,7 +303,7 @@
                         android:layout_marginStart="12dp"
                         android:background="@color/redOverlay"
                         android:onClick="btnEnd"
-                        android:text="Cancel"
+                        android:text="Delete Household"
                         android:textColor="@color/white" />
 
                     <Button
