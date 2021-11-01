@@ -235,7 +235,7 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/fldGrpCVhh08"
                     style="@style/cardView"
-                    android:visibility='@{hh0701.checked||hh0718.checked||hh0719.checked? View.GONE : View.VISIBLE}'>
+                    android:visibility='@{hh0701.checked||hh0713.checked||hh0714.checked||hh0715.checked||hh0716.checked||hh0718.checked||hh0719.checked? View.GONE : View.VISIBLE}'>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -274,7 +274,7 @@
                 <!-- hh09  Radio   -->
                 <androidx.cardview.widget.CardView
                     android:id="@+id/fldGrpCVhh09"
-                    android:visibility="@{hh0701.checked &amp;&amp; !hh0718.checked &amp;&amp; !hh0719.checked ?View.VISIBLE:View.GONE}"
+                    android:visibility="@{hh0701.checked &amp;&amp; !hh0713.checked &amp;&amp;!hh0714.checked &amp;&amp;!hh0715.checked &amp;&amp;!hh0716.checked &amp;&amp;!hh0718.checked &amp;&amp; !hh0719.checked  ?View.VISIBLE:View.GONE}"
                     style="@style/cardView">
 
                     <LinearLayout

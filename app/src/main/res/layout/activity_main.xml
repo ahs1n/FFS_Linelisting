@@ -92,6 +92,7 @@
                                 android:id="@+id/openChildForm"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_margin="12dp"
                                 android:clickable="true"
                                 android:onClick="sectionPress"
                                 android:orientation="horizontal">
@@ -150,6 +151,7 @@
                     android:layout_margin="12dp"
                     android:background="@color/grayLight"
                     android:orientation="vertical"
+                    android:visibility="gone"
                     android:padding="12dp">
 
                     <TextView

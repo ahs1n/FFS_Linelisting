@@ -164,8 +164,8 @@ if(MainApp.form.getHh15()!=null) {
 
     @Override
     public void onBackPressed() {
-        // Toast.makeText(getApplicationContext(), "Back Press Not Allowed", Toast.LENGTH_LONG).show();
-        finish();
-        startActivity(new Intent(this, MainActivity.class));
+        Toast.makeText(getApplicationContext(), "Back Press Not Allowed", Toast.LENGTH_LONG).show();
+/*        finish();
+        startActivity(new Intent(this, MainActivity.class));*/
     }
 }

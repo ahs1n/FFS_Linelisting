@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
@@ -21,7 +20,6 @@ import org.json.JSONException;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -222,7 +220,7 @@ private void populateSpinner() {
     public void onBackPressed() {
         // Toast.makeText(getApplicationContext(), "Back Press Not Allowed", Toast.LENGTH_LONG).show();
         finish();
-        startActivity(new Intent(this, MainActivity.class));
+      //  startActivity(new Intent(this, MainActivity.class));
     }
 
     public void searchEB(View view) {

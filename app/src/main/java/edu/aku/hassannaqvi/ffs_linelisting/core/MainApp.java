@@ -35,7 +35,7 @@ public class MainApp extends Application {
     public static final String _SERVER_URL = "sync.php";
     public static final String _SERVER_GET_URL = "getData.php";
     public static final String _PHOTO_UPLOAD_URL = _HOST_URL + "uploads.php";
-    public static final String _UPDATE_URL = MainApp._IP + "/biofort/app/";
+    public static final String _UPDATE_URL = MainApp._IP + "/biofort/app/listings";
 
     //COUNTRIES
     public static int PAKISTAN = 1;

@@ -64,6 +64,13 @@ public class SectionBActivity extends AppCompatActivity {
 
                 }
 
+                if (bi.hh0713.isChecked() || bi.hh0714.isChecked() || bi.hh0715.isChecked() || bi.hh0716.isChecked()) {
+                    Clear.clearAllFields(bi.fldGrpCVhh08);
+                    Clear.clearAllFields(bi.fldGrpCVhh09);
+                    Clear.clearAllFields(bi.fldGrpCVhh10);
+                    bi.btnContinue.setText("Continue to Next");
+                }
+
                 if (bi.hh0718.isChecked() || bi.hh0719.isChecked()) {
                     Clear.clearAllFields(bi.fldGrpCVhh08);
                     Clear.clearAllFields(bi.fldGrpCVhh09);
@@ -124,7 +131,6 @@ public class SectionBActivity extends AppCompatActivity {
                 i = new Intent(this, FamilyListingActivity.class);
                 MainApp.hhid = 0;
             } else if (bi.hh0718.isChecked() || bi.hh0719.isChecked()) {
-
                 i = new Intent(this, MainActivity.class);
             } else {
                 i = new Intent(this, SectionBActivity.class);
@@ -201,8 +207,8 @@ public class SectionBActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        // Toast.makeText(getApplicationContext(), "Back Press Not Allowed", Toast.LENGTH_LONG).show();
-        finish();
-        startActivity(new Intent(this, MainActivity.class));
+        Toast.makeText(getApplicationContext(), "Back Press Not Allowed", Toast.LENGTH_LONG).show();
+       /* finish();
+        startActivity(new Intent(this, MainActivity.class));*/
     }
 }

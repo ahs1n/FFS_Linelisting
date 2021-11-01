@@ -21,7 +21,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import edu.aku.hassannaqvi.ffs_linelisting.MainActivity;
 import edu.aku.hassannaqvi.ffs_linelisting.R;
 import edu.aku.hassannaqvi.ffs_linelisting.contracts.TableContracts;
 import edu.aku.hassannaqvi.ffs_linelisting.core.MainApp;
@@ -203,8 +202,8 @@ public class FamilyListingActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        // Toast.makeText(getApplicationContext(), "Back Press Not Allowed", Toast.LENGTH_LONG).show();
-        finish();
-        startActivity(new Intent(this, MainActivity.class));
+        Toast.makeText(getApplicationContext(), "Back Press Not Allowed", Toast.LENGTH_LONG).show();
+      /*  finish();
+        startActivity(new Intent(this, MainActivity.class));*/
     }
 }
