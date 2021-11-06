@@ -539,6 +539,10 @@ public class Form extends BaseObservable {
     }
 
 
+    {
+        "hh11":"H", "hh12":"G", "hh13":"G", "hh13a":"2", "hh14":"1", "hh15":"2", "hh21":"1"
+    }
+
     public String sBtoString() throws JSONException {
         Log.d(TAG, "sBtoString: ");
         JSONObject json = new JSONObject();
@@ -548,7 +552,7 @@ public class Form extends BaseObservable {
                 .put("hh0717x", hh0717x)
                 .put("hh09", hh09)
                 .put("hh10", hh10)
-        .put("hh20", hh20);
+                .put("hh20", hh20);
         return json.toString();
     }
 
