@@ -57,6 +57,7 @@ public class Form extends BaseObservable {
     private String hh11 = StringUtils.EMPTY;
     private String hh12 = StringUtils.EMPTY;
     private String hh13 = StringUtils.EMPTY;
+    private String hh13a = StringUtils.EMPTY;
     private String hh14 = StringUtils.EMPTY;
     private String hh15 = StringUtils.EMPTY;
 
@@ -214,6 +215,16 @@ public class Form extends BaseObservable {
     public void setHh13(String hh13) {
         this.hh13 = hh13;
         notifyPropertyChanged(BR.hh13);
+    }
+
+    @Bindable
+    public String getHh13a() {
+        return hh13a;
+    }
+
+    public void setHh13a(String hh13a) {
+        this.hh13a = hh13a;
+        notifyPropertyChanged(BR.hh13a);
     }
 
     @Bindable
@@ -501,6 +512,7 @@ public class Form extends BaseObservable {
             this.hh11 = json.getString("hh11");
             this.hh12 = json.getString("hh12");
             this.hh13 = json.getString("hh13");
+            this.hh13a = json.getString("hh13a");
             this.hh14 = json.getString("hh14");
             this.hh15 = json.getString("hh15");
        /*     this.hh16 = json.getString("hh16");
@@ -547,6 +559,7 @@ public class Form extends BaseObservable {
         json.put("hh11", hh11)
                 .put("hh12", hh12)
                 .put("hh13", hh13)
+                .put("hh13a", hh13a)
                 .put("hh14", hh14)
                 .put("hh15", hh15)
               /*  .put("hh16", hh16)
@@ -569,6 +582,7 @@ public class Form extends BaseObservable {
         json.put(FormTable.COLUMN_DEVICEID, this.deviceId);
         json.put(FormTable.COLUMN_DEVICETAGID, this.deviceTag);
         json.put(FormTable.COLUMN_ISTATUS, this.iStatus);
+        json.put(FormTable.COLUMN_APPVERSION, this.appver);
         json.put(FormTable.COLUMN_SYNCED, this.synced);
         json.put(FormTable.COLUMN_SYNCED_DATE, this.syncDate);
         json.put(FormTable.COLUMN_SA, new JSONObject(sAtoString()));

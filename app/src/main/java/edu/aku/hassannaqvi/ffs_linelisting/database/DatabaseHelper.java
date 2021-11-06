@@ -94,6 +94,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // Put all JSON as xxtoString()
         values.put(FormTable.COLUMN_SA, cr.sAtoString());
         values.put(FormTable.COLUMN_SB, cr.sBtoString());
+       // values.put(FormTable.COLUMN_LC, cr.lCtoString());
 
         // Insert the new row, returning the primary key value of the new row
         long newRowId;
@@ -114,6 +115,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(MwraTable.COLUMN_PROJECT_NAME, mwra.getProjectName());
         values.put(MwraTable.COLUMN_UID, mwra.getUid());
+        values.put(MwraTable.COLUMN_UUID, mwra.getUuid());
         values.put(MwraTable.COLUMN_USERNAME, mwra.getUserName());
         values.put(MwraTable.COLUMN_SYSDATE, mwra.getSysDate());
         values.put(MwraTable.COLUMN_ISTATUS, mwra.getiStatus());
@@ -122,7 +124,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(MwraTable.COLUMN_APPVERSION, mwra.getAppver());
         values.put(MwraTable.COLUMN_START_TIME, mwra.getStartTime());
         values.put(MwraTable.COLUMN_END_TIME, mwra.getEndTime());
-
         // Put all JSON as xxtoString()
         values.put(MwraTable.COLUMN_SMWRA, mwra.sMwratoString());
 

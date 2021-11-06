@@ -113,13 +113,15 @@ if(MainApp.form.getHh15()!=null) {
 
     private void saveDraft() {
         mwra = new Mwra();
+        mwra.setUuid(MainApp.form.getUid());
         mwra.setSysDate(MainApp.form.getSysDate());
         mwra.setUserName(MainApp.user.getUserName());
         mwra.setDeviceId(MainApp.appInfo.getDeviceID());
         mwra.setDeviceTag(MainApp.appInfo.getTagName());
         mwra.setAppver(MainApp.appInfo.getAppVersion());
-        mwra.setStartTime(st);
+        //mwra.setStartTime(st);
         mwra.setIdentification();
+        mwra.setSno(String.valueOf(MainApp.mwraCount));
 
 /*        mwra.setHh11(bi.hh11.getText().toString());
 
@@ -140,6 +142,8 @@ if(MainApp.form.getHh15()!=null) {
         mwra.setHh18(bi.hh18.getText().toString());
 
         mwra.setHh19(bi.hh19.getText().toString());
+
+        mwra.setHh20(String.valueOf(MainApp.maxStructure));
         mwra.setHh21(String.valueOf(MainApp.hhid));
 
         try {

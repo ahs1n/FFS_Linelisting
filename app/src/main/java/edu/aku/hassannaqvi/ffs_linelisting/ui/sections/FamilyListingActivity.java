@@ -84,11 +84,11 @@ public class FamilyListingActivity extends AppCompatActivity {
         }
     }
 
-/*    private boolean insertRecord() {
+    private boolean insertRecord() {
         long rowId = 0;
 
         try {
-          //  rowId = db.addForm(form);
+            rowId = db.addForm(form);
 
             if (rowId > 0) {
                 long updCount = 0;
@@ -99,7 +99,7 @@ public class FamilyListingActivity extends AppCompatActivity {
                 updCount = db.updateFormColumn(TableContracts.FormTable.COLUMN_UID, form.getUid());
 
                 if (updCount > 0) {
-                    return true;
+                    return updateDB();
                 }
 
             } else {
@@ -112,14 +112,15 @@ public class FamilyListingActivity extends AppCompatActivity {
         }
 
         return false;
-    }*/
+
+    }
 
 
     public void btnContinue(View view) {
         if (!formValidation()) return;
         saveDraft();
-        if (updateDB()) {
-           finish();
+        if (MainApp.hhid == 1 ? updateDB() : insertRecord()) {
+            finish();
             if (bi.hh1401.isChecked()) {
                 Toast.makeText(this, "Staring MWRA", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(this, MWRAListingActivity.class));
@@ -139,18 +140,19 @@ public class FamilyListingActivity extends AppCompatActivity {
     private void saveDraft() {
         // form = new Form();
         form.setSysDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH).format(new Date().getTime()));
-        form.setUserName(MainApp.user.getUserName());
-        form.setDeviceId(MainApp.appInfo.getDeviceID());
-        form.setDeviceTag(MainApp.appInfo.getTagName());
-        form.setAppver(MainApp.appInfo.getAppVersion());
-        form.setStartTime(st);
-        form.setEndTime(new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH).format(new Date().getTime()));
+        //  form.setUserName(MainApp.user.getUserName());
+        // form.setDeviceId(MainApp.appInfo.getDeviceID());
+        // form.setDeviceTag(MainApp.appInfo.getTagName());
+        // form.setAppver(MainApp.appInfo.getAppVersion());
+        // form.setStartTime(st);
+        // form.setEndTime(new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH).format(new Date().getTime()));
 
         form.setHh11(bi.hh11.getText().toString());
 
         form.setHh12(bi.hh12.getText().toString());
 
         form.setHh13(bi.hh13.getText().toString());
+        form.setHh13a(bi.hh13a.getText().toString());
 
         form.setHh14(bi.hh1401.isChecked() ? "1"
                 : bi.hh1402.isChecked() ? "2"
@@ -168,10 +170,10 @@ public class FamilyListingActivity extends AppCompatActivity {
         form.setHh21(String.valueOf(MainApp.hhid));
 
         try {
-            form.setsA(form.sAtoString());
+            form.setlC(form.lCtoString());
         } catch (JSONException e) {
             e.printStackTrace();
-            Toast.makeText(this, "JSONException(SB): " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "JSONException(form): " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -187,17 +189,27 @@ public class FamilyListingActivity extends AppCompatActivity {
 
         saveDraft();
         if (updateDB()) {
-             finish();
+            finish();
 
-                //     Toast.makeText(this, "Staring Household", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(this, SectionBActivity.class));
+            //     Toast.makeText(this, "Staring Household", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this, SectionBActivity.class));
 
         } else Toast.makeText(this, "Failed to Update Database!", Toast.LENGTH_SHORT).show();
     }
 
 
     private boolean formValidation() {
-        return Validator.emptyCheckingContainer(this, bi.GrpName);
+        if (!Validator.emptyCheckingContainer(this, bi.GrpName)) {
+            return false;
+        }
+
+        if (!bi.hh15.getText().toString().equals("") && !bi.hh13a.getText().toString().equals("")) {
+            if (Integer.parseInt(bi.hh15.getText().toString()) > Integer.parseInt(bi.hh13a.getText().toString())) {
+                Validator.emptyCustomTextBox(this, bi.hh15, "MWRA cannot be more than Total Memmbers");
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override

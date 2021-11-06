@@ -106,7 +106,7 @@
                                 android:layout_weight="1"
                                 android:inputType="textCapWords|textPersonName"
                                 android:digits="AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz "
-                                android:hint="@string/hh11" />
+                             />
                         </LinearLayout>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -146,8 +146,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:inputType="textCapWords|textPersonName"
-                                android:digits="AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz "
-                                android:hint="@string/hh12" />
+                                android:digits="AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz " />
                         </LinearLayout>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -187,12 +186,49 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:inputType="textCapWords|textPersonName"
-                                android:digits="AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz "
-                                android:hint="@string/hh13" />
+                                android:digits="AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz " />
                         </LinearLayout>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
+                <!-- hh13a  Input   -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/fldGrpCVhh13a"
+                    style="@style/cardView">
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bottom"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                style="@style/quesNum"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="@string/Q_hh13a" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="@string/hh13a" />
+
+                            <EditText
+                                android:id="@+id/hh13a"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:hint="##"
+                                android:inputType="number"
+                                app:maxValue="99"
+                                app:minValue="1" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
                 <!-- hh14  Radio   -->
                 <androidx.cardview.widget.CardView
                     android:id="@+id/fldGrpCVhh14"
@@ -281,7 +317,6 @@
                                 android:id="@+id/hh15"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:hint="@string/hh15"
                                 android:inputType="number"
                                 app:minValue="1"
                                 app:maxValue="99" />
@@ -330,4 +365,7 @@
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
-</layout>
+</layout><!--  {"hh01":"900000001","hh02":"","hh03":"","hh04":"TEST","hh05":"TEST","hh06":"villages "}
+    {"hh07":"1","hh08":"","hh0717x":"","hh09":"1","hh10":"2","hh20":"1"}
+    {"hh11":"Head One","hh12":"Father One","hh13":"Caste One","hh13a":"5","hh14":"1","hh15":"2","hh21":"1"}
+    {"hh11":"Head Two","hh12":"Father Two","hh13":"Caste Two","hh13a":"6","hh14":"1","hh15":"1","hh21":"2"}-->

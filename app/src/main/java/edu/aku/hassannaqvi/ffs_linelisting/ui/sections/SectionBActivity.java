@@ -46,6 +46,7 @@ public class SectionBActivity extends AppCompatActivity {
 
         MainApp.maxStructure++;
         MainApp.hhid = 0;
+
         bi.hhid.setText(MainApp.form.getHh01() + "\n" + String.format("%03d", MainApp.maxStructure));
         Toast.makeText(this, "Staring Structure", Toast.LENGTH_SHORT).show();
 
@@ -146,13 +147,13 @@ public class SectionBActivity extends AppCompatActivity {
         if (bi.hh0718.isChecked() || bi.hh0719.isChecked()) {
             MainApp.maxStructure--;
         }
-        form.setSysDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH).format(new Date().getTime()));
-        form.setUserName(MainApp.user.getUserName());
-        form.setDeviceId(MainApp.appInfo.getDeviceID());
-        form.setDeviceTag(MainApp.appInfo.getTagName());
-        form.setAppver(MainApp.appInfo.getAppVersion());
-        form.setStartTime(st);
-        form.setEndTime(new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH).format(new Date().getTime()));
+        //form.setSysDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH).format(new Date().getTime()));
+        //form.setUserName(MainApp.user.getUserName());
+        //form.setDeviceId(MainApp.appInfo.getDeviceID());
+        //form.setDeviceTag(MainApp.appInfo.getTagName());
+        //form.setAppver(MainApp.appInfo.getAppVersion());
+        //form.setStartTime(st);
+        //form.setEndTime(new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH).format(new Date().getTime()));
 
         form.setHh07(bi.hh0701.isChecked() ? "1"
                 : bi.hh0702.isChecked() ? "2"

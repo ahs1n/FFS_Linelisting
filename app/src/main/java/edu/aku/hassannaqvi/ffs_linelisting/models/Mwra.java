@@ -38,8 +38,10 @@ public class Mwra extends BaseObservable {
     private String syncDate = StringUtils.EMPTY;
 
     // SECTION VARIABLES
-    private String sH1 = StringUtils.EMPTY;
+    private String sMwra = StringUtils.EMPTY;
+    //private String sH1 = StringUtils.EMPTY;
     // FIELD VARIABLES
+    private String sno = StringUtils.EMPTY;
     private String hh01 = StringUtils.EMPTY;
     private String hh02 = StringUtils.EMPTY;
     private String hh03 = StringUtils.EMPTY;
@@ -54,7 +56,7 @@ public class Mwra extends BaseObservable {
     private String hh19 = StringUtils.EMPTY;
   private String hh20 = StringUtils.EMPTY;
     private String hh21 = StringUtils.EMPTY;
-    private String sMwra = StringUtils.EMPTY;
+
 
 
     public Mwra() {
@@ -64,8 +66,7 @@ public class Mwra extends BaseObservable {
         setUserName(MainApp.user.getUserName());
         setDeviceId(MainApp.deviceid);
         setAppver(MainApp.appInfo.getAppVersion());
-        setAppver(MainApp.appInfo.getAppVersion());
-        setAppver(MainApp.appInfo.getAppVersion());
+
 
     }
 
@@ -87,6 +88,16 @@ public class Mwra extends BaseObservable {
     public void setHh01(String hh01) {
         this.hh01 = hh01;
         notifyPropertyChanged(BR.hh01);
+    }
+
+    @Bindable
+    public String getSno() {
+        return sno;
+    }
+
+    public void setSno(String sno) {
+        this.sno = sno;
+        notifyPropertyChanged(BR.sno);
     }
 
     @Bindable
@@ -421,14 +432,14 @@ public class Mwra extends BaseObservable {
         this.syncDate = syncDate;
     }
 
-    public String getsH1() {
-        return sH1;
-    }
+    /* public String getsH1() {
+         return sH1;
+     }
 
-    public void setsH1(String sH1) {
-        this.sH1 = sH1;
-    }
-
+     public void setsH1(String sH1) {
+         this.sH1 = sH1;
+     }
+ */
     public String getsMwra() {
         return sMwra;
     }
@@ -464,6 +475,7 @@ public class Mwra extends BaseObservable {
             JSONObject json = null;
             json = new JSONObject(string);
             this.hh01 = json.getString("hh01");
+            this.sno = json.has("sno") ? json.getString("sno") : ""; // Similar to ALTER Table
             this.hh02 = json.getString("hh02");
             this.hh03 = json.getString("hh03");
             this.hh04 = json.getString("hh04");
@@ -486,6 +498,7 @@ public class Mwra extends BaseObservable {
         JSONObject json = new JSONObject();
 
         json.put("hh01", hh01)
+                .put("sno", sno)
                 .put("hh02", hh02)
                 .put("hh03", hh03)
                 .put("hh04", hh04)
@@ -510,6 +523,7 @@ public class Mwra extends BaseObservable {
         json.put(MwraTable.COLUMN_UID, this.uid);
         json.put(MwraTable.COLUMN_UUID, this.uuid);
         json.put(MwraTable.COLUMN_USERNAME, this.userName);
+        json.put(MwraTable.COLUMN_APPVERSION, this.appver);
         json.put(MwraTable.COLUMN_SYSDATE, this.sysDate);
         json.put(MwraTable.COLUMN_DEVICEID, this.deviceId);
         json.put(MwraTable.COLUMN_DEVICETAGID, this.deviceTag);
