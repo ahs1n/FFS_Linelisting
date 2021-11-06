@@ -217,13 +217,15 @@
                                 android:layout_height="match_parent"
                                 android:text="@string/hh13a" />
 
-                            <EditText
+                            <com.edittextpicker.aliazaz.EditTextPicker
                                 android:id="@+id/hh13a"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:hint="##"
                                 android:inputType="number"
+                                android:maxLength="2"
+                                app:type="range"
                                 app:maxValue="99"
                                 app:minValue="1" />
                         </LinearLayout>
@@ -318,6 +320,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:inputType="number"
+                                android:maxLength="2"
+                                app:type="range"
                                 app:minValue="1"
                                 app:maxValue="99" />
                         </LinearLayout>
